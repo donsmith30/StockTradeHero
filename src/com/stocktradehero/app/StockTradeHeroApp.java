@@ -1,17 +1,23 @@
 package com.stocktradehero.app;
 
+import com.apps.util.Console;
 import com.apps.util.Prompter;
 import com.apps.util.SplashApp;
+import com.stocktradehero.Game;
 
 import java.util.Scanner;
 
 public class StockTradeHeroApp implements SplashApp {
 
+    Prompter prompter = new Prompter(new Scanner(System.in));
+
     @Override
     public void start() {
         System.out.println();
-        System.out.println("Start");
-        promptForName();
+        System.out.println("booting up...");
+        Console.pause(250);
+        Console.clear();
+        Game.initialize();
     }
 
     @Override
@@ -24,9 +30,8 @@ public class StockTradeHeroApp implements SplashApp {
         SplashApp.super.welcome(l, strings);
     }
 
-    private String promptForName(){
+    private String promptForName(){ ///might move this to the Status board...
         String name = null;
-        Prompter prompter = new Prompter(new Scanner(System.in));
         prompter.prompt("Top score, Enter initials: ", "[A-Z]{3}","you did not enter 3 letters" );
         return name;
     }
