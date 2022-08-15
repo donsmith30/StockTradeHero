@@ -15,6 +15,7 @@ public class StockTradeHeroApp implements SplashApp {
     public void start() {
         System.out.println();
         System.out.println("booting up...");
+        promptForName();
         Console.pause(250);
         Console.clear();
         GameMarket.initialize();
