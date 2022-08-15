@@ -13,10 +13,11 @@ public class Game {
 
     }
 
-    public void play() {  //thinking the order of play will be here
+    public void play() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
 
     }
 
+    public void round(){ //thinking the order of play will be here
 
-
+    }
 }
