@@ -18,9 +18,9 @@ enum StockType {
     private final double stockDividend;
 
 
-    StockType(double volatility, double investmentReturn) {
+    StockType(double volatility, double stockDividend) {
         this.volatility = volatility;
-        this.stockDividend = investmentReturn;
+        this.stockDividend = stockDividend;
     }
 
     public double getVolatility() {
@@ -28,6 +28,10 @@ enum StockType {
     }
 
     public double getInvestmentReturn() {
+        return stockDividend;
+    }
+
+    public double getStockDividend() {
         return stockDividend;
     }
 }

@@ -51,4 +51,9 @@ public class Stock {
     public double getStockVolatility() {
         return this.stockType.getVolatility();
     }
+
+    public double getStockDividend() {
+        return this.stockType.getStockDividend();
+    }
+
 }
