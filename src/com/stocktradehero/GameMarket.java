@@ -20,9 +20,9 @@ public class GameMarket {
 
     List<Stock> stocks = new ArrayList<>(List.of(
             new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH),
-            new Stock("Stock2","stk2", 50., StockType.PRECIOUS_METALS),
-            new Stock("Stock3","stk3", 50., StockType.INDUSTRIAL),
-            new Stock("Stock4","stk4", 50., StockType.AGRICULTURE)));
+            new Stock("Stock2","STWO", 50., StockType.PRECIOUS_METALS),
+            new Stock("Stock3","THRE", 50., StockType.INDUSTRIAL),
+            new Stock("Stock4","FOUR", 50., StockType.AGRICULTURE)));
     Player p1 = new Player("Player 1");
     Player p2 = new Player("Player 2");
     Player p3 = new Player("Player 3");
@@ -79,7 +79,7 @@ public class GameMarket {
             Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
             currentPlayer.sellStock(Integer.parseInt(getQty()),s1);
             System.out.println("old stock price " + s1.getPrice());
-            s1.setPrice(s1.getPrice() * s1.getStockVolatility());
+            s1.setPrice(s1.getPrice() * (1-s1.getStockVolatility()));
             System.out.println("New stock price " + s1.getPrice());
             currentPlayer.playerOption();
         }
@@ -95,8 +95,8 @@ public class GameMarket {
     }
 
     public void qtyPrompt() {
-        setQty(prompter.prompt("Enter the ticker symbol of the stock you want to purchase: ", "[1-9]{2}",
-                "please enter a valid stock"));
+        setQty(prompter.prompt("Enter the amount you want to purchase: ", "[0-9]",
+                "please enter a valid number"));
     }
 
     //get & set
