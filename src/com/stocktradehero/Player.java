@@ -61,15 +61,19 @@ class Player {
         System.out.println("buying stock");
     }
 
-    public void sellStock(int qty, Stock stockName) {
-        if (qty> 0){
-            stockShareBalance -=qty;
-            stockAmountBalance -= qty*stockName.getPrice();
-            cashBalance += qty* stockName.getPrice();
-            totalAmountBalance =cashBalance +stockAmountBalance;
-            System.out.println(name + " just sold "+qty +stockName);  //might need modified
-        }
+    public void sellStock(int qty, Stock stockName) throws IllegalArgumentException{
 
+            if (qty<= stockShareBalance){
+                stockShareBalance -=qty;
+                stockAmountBalance -= qty*stockName.getPrice();
+                cashBalance += qty* stockName.getPrice();
+                totalAmountBalance =cashBalance +stockAmountBalance;
+                System.out.println(name + " just sold "+qty +stockName);  //might need modified
+            }
+            else{
+                System.out.println("Insufficient stock share balance. Your current stock share balance is " + stockShareBalance+
+                        " Please try again! ");
+        }
 
 
 
