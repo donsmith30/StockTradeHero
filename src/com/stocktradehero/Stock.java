@@ -8,7 +8,7 @@ package com.stocktradehero;
  * Enum   StockType
  * double price
  */
-class Stock {
+public class Stock {
 
     // Fields, or attributes, of a stock
     private String companyName;
