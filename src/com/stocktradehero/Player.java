@@ -29,6 +29,10 @@ class Player {
     private final Map<Stock, Integer> Stocks = new TreeMap<>();
     Prompter prompter = new Prompter(new Scanner(System.in));
     private String playerOption;
+    private int stockShareBalance;
+    private double stockAmountBalance;
+    private double totalAmountBalance;
+
 
     //constructors
     public Player(String name) {
@@ -36,49 +40,49 @@ class Player {
     }
 
     //methods
-    public void buyStock(){
-        System.out.println("Player buys Stock");
-    }
-
-    public void sellStock(){
-        System.out.println("Player Sells stock...");
-    }
-
     public void playerOption() {
         setPlayerOption(prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
                 "you did not enter a correct response, must choose one of the following: [B], [S], or [E]."));
     }
 
 
-
-    //Methods:
-  public void buyStock(int qty, Stock stockName) {
-        if (stockName.getPrice()*qty > cashBalance) {
+    public void buyStock(int qty, Stock stockName) {
+        if (stockName.getPrice() * qty > cashBalance) {
             System.out.println("Insufficient Balance. Your current cash balance is " + cashBalance);
         } else {
-            stockShareBalance += stockShareToBuy;
-            stockAmountBalance += stockShareToBuy * stockPrice;
-            cashBalance -= stockShareToBuy * stockPrice;
+            stockShareBalance += qty;
+            stockAmountBalance += qty * stockName.getPrice();
+            cashBalance -= qty * stockName.getPrice();
             totalAmountBalance = cashBalance + stockAmountBalance;
-            System.out.println(name + " just bought " + stockShareToBuy + stockName + " The cash balance is " + cashBalance +
-                    ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance);
+            System.out.println(name + " just bought " + qty + stockName + " The cash balance is " + cashBalance +
+                    ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance); //might need modified
 
         }
-      System.out.println("buying stock");
-  }
+        System.out.println("buying stock");
+    }
 
-   public void sellStock() {
-////TODO: if buy stock above works, easy to follow here.
-//
-       System.out.println("buying stock");
-}
+    public void sellStock(int qty, Stock stockName) {
+        if (qty> 0){
+            stockShareBalance -=qty;
+            stockAmountBalance -= qty*stockName.getPrice();
+            cashBalance += qty* stockName.getPrice();
+            totalAmountBalance =cashBalance +stockAmountBalance;
+            System.out.println(name + " just sold "+qty +stockName);  //might need modified
+        }
 
-    public void printBalance() {
+
+
 
     }
 
+    public void printBalance() {
+        System.out.println(" The cash balance is " + cashBalance +
+                ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance ); //might need modified
 
-//    Map<key: stockname, value: stock shares for each stock>
+
+
+    }
+
 
 
 
