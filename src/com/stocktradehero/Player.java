@@ -2,6 +2,19 @@ package com.stocktradehero;
 
 import java.util.Map;
 import java.util.TreeMap;
+/*
+ * Player
+ * attributes:
+ * String name (maybe leave out name input until end of game)
+ * double cashBalance
+ * double stockBalance
+ * double totalBalance
+ * Map<Stocks> stocks
+ * behaviors:
+ * buyStock()
+ * sellStock()
+ * printBalance()
+ */
 
 class Player {
 
