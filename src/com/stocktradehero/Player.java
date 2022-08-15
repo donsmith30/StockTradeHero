@@ -52,8 +52,8 @@ class Player {
 
 
     //Methods:
-    public void buyStock(int stockShareToBuy) {
-        if (stockShareToBuy * stockPrice > cashBalance) {
+  public void buyStock(int qty, Stock stockName) {
+        if (stockName.getPrice()*qty > cashBalance) {
             System.out.println("Insufficient Balance. Your current cash balance is " + cashBalance);
         } else {
             stockShareBalance += stockShareToBuy;
@@ -64,19 +64,21 @@ class Player {
                     ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance);
 
         }
-    }
+      System.out.println("buying stock");
+  }
 
-    public void sellStock() {
-//TODO: if buy stock above works, easy to follow here.
-
-    }
+   public void sellStock() {
+////TODO: if buy stock above works, easy to follow here.
+//
+       System.out.println("buying stock");
+}
 
     public void printBalance() {
 
     }
 
 
-    Map<key: stockname, value: stock shares for each stock>
+//    Map<key: stockname, value: stock shares for each stock>
 
 
 
