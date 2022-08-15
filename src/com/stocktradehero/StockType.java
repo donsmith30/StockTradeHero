@@ -23,4 +23,11 @@ enum StockType {
         this.investmentReturn = investmentReturn;
     }
 
+    public double getVolatility() {
+        return volatility;
+    }
+
+    public double getInvestmentReturn() {
+        return investmentReturn;
+    }
 }
