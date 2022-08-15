@@ -47,4 +47,8 @@ class Stock {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public double getStockVolatility() {
+        return this.stockType.getVolatility();
+    }
 }

@@ -14,6 +14,7 @@ package com.stocktradehero;
 
 import com.apps.util.Prompter;
 import com.stocktradehero.app.StockTradeHeroApp;
+import com.sun.jdi.Value;
 
 import java.util.Scanner;
 
@@ -22,6 +23,7 @@ public class GameMarket {
     Player p1 = new Player("Player 1");
     Player p2 = new Player("Player 2");
     Player p3 = new Player("Player 3");
+    Stock s1 = new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH);
     private int turns = 5;
     private int currentRound;
     private Player currentPlayer=p1;
@@ -37,7 +39,7 @@ public class GameMarket {
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
-        Stock s1 = new Stock();
+        Stock s1 = new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH);
         System.out.println(p1.getName()+ " It is your turn...");
 
     }
@@ -47,6 +49,7 @@ public class GameMarket {
     }
 
     public void round(){ //thinking the order of play will be here
+         ;
 
     }
 
@@ -58,6 +61,9 @@ public class GameMarket {
             currentPlayer.buyStock();
             System.out.println(currentPlayer + " bought stock!");
             currentPlayer.playerOption();
+            System.out.println("old stock price " + s1.getPrice());
+            s1.setPrice(s1.getPrice() * s1.getStockVolatility());
+            System.out.println("New stock price " + s1.getPrice());
         }
         else if ( currentPlayer.getPlayerOption().equals("S")) {
                 currentPlayer.sellStock();
