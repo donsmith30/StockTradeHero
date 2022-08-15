@@ -19,19 +19,19 @@ import java.util.TreeMap;
  * printBalance()
  */
 
-class Player {
+public class Player {
 
     //attributes
     private String name;
     private double cashBalance = 1000.0;
     private double stockBalance = 0.0;
     private double totalBalance;
-    private final Map<Stock, Integer> Stocks = new TreeMap<>();
-    Prompter prompter = new Prompter(new Scanner(System.in));
     private String playerOption;
     private int stockShareBalance;
     private double stockAmountBalance;
     private double totalAmountBalance;
+    Prompter prompter = new Prompter(new Scanner(System.in));
+    //private final Map<Stock, Integer> Stocks = new TreeMap<>();
 
 
     //constructors
@@ -39,59 +39,76 @@ class Player {
         this.name = name;
     }
 
+
     //methods
     public void playerOption() {
         setPlayerOption(prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
                 "you did not enter a correct response, must choose one of the following: [B], [S], or [E]."));
     }
 
-
     public void buyStock(int qty, Stock stockName) {
-        if (stockName.getPrice() * qty > cashBalance) {
-            System.out.println("Insufficient Balance. Your current cash balance is " + cashBalance);
+        if (stockName.getPrice() * qty > getCashBalance()) {
+            System.out.println("Insufficient Balance. Your current cash balance is " + getCashBalance());
         } else {
             stockShareBalance += qty;
             stockAmountBalance += qty * stockName.getPrice();
             cashBalance -= qty * stockName.getPrice();
-            totalAmountBalance = cashBalance + stockAmountBalance;
-            System.out.println(name + " just bought " + qty + stockName + " The cash balance is " + cashBalance +
-                    ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance); //might need modified
+            totalAmountBalance = getCashBalance() + getStockAmountBalance();
+            System.out.println(getName() + " just bought " + qty + " shares of " + stockName); //might need modified
 
         }
-        System.out.println("buying stock");
     }
 
     public void sellStock(int qty, Stock stockName) throws IllegalArgumentException{
-
-            if (qty<= stockShareBalance){
+            if (qty<= getStockShareBalance()){
                 stockShareBalance -=qty;
                 stockAmountBalance -= qty*stockName.getPrice();
                 cashBalance += qty* stockName.getPrice();
-                totalAmountBalance =cashBalance +stockAmountBalance;
-                System.out.println(name + " just sold "+qty +stockName);  //might need modified
+                totalAmountBalance =getCashBalance() +getStockAmountBalance();
+                System.out.println(getName() + " just sold " + qty + " shares of " + stockName);
             }
             else{
-                System.out.println("Insufficient stock share balance. Your current stock share balance is " + stockShareBalance+
+                System.out.println("Insufficient stock shares. Your current stock share balance is " + getStockShareBalance()+
                         " Please try again! ");
         }
-
-
-
     }
 
     public void printBalance() {
-        System.out.println(" The cash balance is " + cashBalance +
-                ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance ); //might need modified
-
-
-
+        System.out.println(getName()+ "'cash balance is " + getCashBalance() +
+                ". Total stock amount balance is " + getStockAmountBalance()
+                + ". Total balance is " + getTotalAmountBalance() );
     }
 
 
-
-
     //getters & setters
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public double getCashBalance() {
+        return cashBalance;
+    }
+
+
+    public double getStockBalance() {
+        return stockBalance;
+    }
+
+    public double getTotalBalance() {
+        return totalBalance;
+    }
+
+    public Prompter getPrompter() {
+        return prompter;
+    }
+
+    public void setPrompter(Prompter prompter) {
+        this.prompter = prompter;
+    }
 
     public String getPlayerOption() {
         return playerOption;
@@ -101,35 +118,15 @@ class Player {
         this.playerOption = playerOption;
     }
 
-    public double getCashBalance() {
-        return cashBalance;
+    public int getStockShareBalance() {
+        return stockShareBalance;
     }
 
-    public void setCashBalance(double cashBalance) {
-        this.cashBalance = cashBalance;
+    public double getStockAmountBalance() {
+        return stockAmountBalance;
     }
 
-    public double getStockBalance() {
-        return stockBalance;
-    }
-
-    public void setStockBalance(double stockBalance) {
-        this.stockBalance = stockBalance;
-    }
-
-    public double getTotalBalance() {
-        return totalBalance;
-    }
-
-    public void setTotalBalance(double totalBalance) {
-        this.totalBalance = totalBalance;
-    }
-
-    public Map<Stock, Integer> getStocks() {
-        return Stocks;
-    }
-
-    public String getName() {
-        return name;
+    public double getTotalAmountBalance() {
+        return totalAmountBalance;
     }
 }
