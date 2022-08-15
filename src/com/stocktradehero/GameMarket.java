@@ -1,6 +1,18 @@
 package com.stocktradehero;
+/*
+ * Market
+ * attributes:
+ * String name
+ * List<Player> players (HAS-A)
+ * Stock                (HAS-A)
+ * MarketForces         (HAS-A)
+ * behaviors:
+ * shuffle()   -- shuffle MarketForces
+ * deal()      -- initial deal to set up game
+ * giveStock() -- to Player
+ */
 
-public class Game {
+public class GameMarket {
 
     private int turns = 5;
 
