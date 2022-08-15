@@ -16,10 +16,18 @@ import com.apps.util.Prompter;
 import com.stocktradehero.app.StockTradeHeroApp;
 import com.sun.jdi.Value;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class GameMarket {
 
+    List<Stock> stocks = new ArrayList<>(List.of(
+            new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH),
+            new Stock("Stock2","st2", 50., StockType.PRECIOUS_METALS),
+            new Stock("Stock3","st3", 50., StockType.INDUSTRIAL),
+            new Stock("Stock4","st4", 50., StockType.AGRICULTURE)));
     Player p1 = new Player("Player 1");
     Player p2 = new Player("Player 2");
     Player p3 = new Player("Player 3");
