@@ -49,6 +49,37 @@ class Player {
                 "you did not enter a correct response, must choose one of the following: [B], [S], or [E]."));
     }
 
+
+
+    //Methods:
+    public void buyStock(int stockShareToBuy) {
+        if (stockShareToBuy * stockPrice > cashBalance) {
+            System.out.println("Insufficient Balance. Your current cash balance is " + cashBalance);
+        } else {
+            stockShareBalance += stockShareToBuy;
+            stockAmountBalance += stockShareToBuy * stockPrice;
+            cashBalance -= stockShareToBuy * stockPrice;
+            totalAmountBalance = cashBalance + stockAmountBalance;
+            System.out.println(name + " just bought " + stockShareToBuy + stockName + " The cash balance is " + cashBalance +
+                    ". Total stock share is " + stockShareBalance + ". Total balance is " + totalAmountBalance);
+
+        }
+    }
+
+    public void sellStock() {
+//TODO: if buy stock above works, easy to follow here.
+
+    }
+
+    public void printBalance() {
+
+    }
+
+
+    Map<key: stockname, value: stock shares for each stock>
+
+
+
     //getters & setters
 
 
