@@ -25,9 +25,9 @@ public class GameMarket {
 
     List<Stock> stocks = new ArrayList<>(List.of(
             new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH),
-            new Stock("Stock2","st2", 50., StockType.PRECIOUS_METALS),
-            new Stock("Stock3","st3", 50., StockType.INDUSTRIAL),
-            new Stock("Stock4","st4", 50., StockType.AGRICULTURE)));
+            new Stock("Stock2","stk2", 50., StockType.PRECIOUS_METALS),
+            new Stock("Stock3","stk3", 50., StockType.INDUSTRIAL),
+            new Stock("Stock4","stk4", 50., StockType.AGRICULTURE)));
     Player p1 = new Player("Player 1");
     Player p2 = new Player("Player 2");
     Player p3 = new Player("Player 3");
@@ -61,27 +61,36 @@ public class GameMarket {
 
     }
 
+
+
     public void turn(){
         boolean endTurn = false;
         currentPlayer.playerOption();
         while (!endTurn) {
         if (currentPlayer.getPlayerOption().equals("B")) {
+            buyPrompt();
             currentPlayer.buyStock();
             System.out.println(currentPlayer + " bought stock!");
-            currentPlayer.playerOption();
             System.out.println("old stock price " + s1.getPrice());
-            s1.setPrice(s1.getPrice() * s1.getStockVolatility());
+            s1.setPrice(s1.getPrice() * (1 + s1.getStockVolatility()));
             System.out.println("New stock price " + s1.getPrice());
+            currentPlayer.playerOption();
         }
         else if ( currentPlayer.getPlayerOption().equals("S")) {
-                currentPlayer.sellStock();
+            //currentPlayer.sellStock();
             System.out.println(currentPlayer + " sold stock!");
+            s1.setPrice(s1.getPrice() * s1.getStockVolatility());
             currentPlayer.playerOption();
         }
         else if (currentPlayer.getPlayerOption().equals("E")) { endTurn= true;
             System.out.println("Ending turn...");
         }
         }
+    }
+
+    public String buyPrompt() {
+        return prompter.prompt("Enter the ticker symbol of the stock you want to purchase: ", "[A-Z]{4}",
+                "please enter a valid stock");
     }
 
     /*
