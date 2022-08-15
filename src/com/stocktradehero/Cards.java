@@ -18,4 +18,19 @@ package com.stocktradehero;
 
 enum Cards {
 
+    CHIPSHORTAGE(.8,1,1,1, "String here to read back to players");
+
+    private double xTech;
+    private double xPreciousMetals;
+    private double xIdustrial;
+    private double xAgriculture;
+    private String cardText;
+
+    Cards(double xTech, double xPreciousMetals, double xIdustrial, double xAgriculture, String cardText) {
+        this.xTech = xTech;
+        this.xPreciousMetals = xPreciousMetals;
+        this.xIdustrial = xIdustrial;
+        this.xAgriculture = xAgriculture;
+        this.cardText = cardText;
+    }
 }

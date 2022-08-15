@@ -12,15 +12,32 @@ package com.stocktradehero;
  * giveStock() -- to Player
  */
 
+import com.apps.util.Prompter;
+import com.stocktradehero.app.StockTradeHeroApp;
+
+import java.util.Scanner;
+
 public class GameMarket {
 
+    Player p1 = new Player("Player 1");
+    Player p2 = new Player("Player 2");
+    Player p3 = new Player("Player 3");
     private int turns = 5;
+    private int currentRound;
+    private Player currentPlayer=p1;
+    private boolean gameOver = false;
+    private boolean endTurn = false;
+    Prompter prompter = new Prompter(new Scanner(System.in));
+
+
+
 
 
     public static void initialize(){
         Player p1 = new Player("Player 1");
         Player p2 = new Player("Player 2");
         Player p3 = new Player("Player 3");
+        Stock s1 = new Stock();
         System.out.println(p1.getName()+ " It is your turn...");
 
     }
@@ -31,5 +48,38 @@ public class GameMarket {
 
     public void round(){ //thinking the order of play will be here
 
+    }
+
+    public void turn(){
+        boolean endTurn = false;
+        currentPlayer.playerOption();
+        while (!endTurn) {
+        if (currentPlayer.getPlayerOption().equals("B")) {
+            currentPlayer.buyStock();
+            System.out.println(currentPlayer + " bought stock!");
+            currentPlayer.playerOption();
+        }
+        else if ( currentPlayer.getPlayerOption().equals("S")) {
+                currentPlayer.sellStock();
+            System.out.println(currentPlayer + " sold stock!");
+            currentPlayer.playerOption();
+        }
+        else if (currentPlayer.getPlayerOption().equals("E")) { endTurn= true;
+            System.out.println("Ending turn...");
+        }
+        }
+    }
+
+    /*
+    public void playerOption(){
+        prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
+                "you did not enter a correct response, must choose one of the following: [B], [S], or [E]." );
+    }
+
+     */
+
+    public static void main(String[] args) {
+        GameMarket game = new GameMarket();
+        game.turn();
     }
 }

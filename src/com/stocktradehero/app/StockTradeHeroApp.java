@@ -32,9 +32,7 @@ public class StockTradeHeroApp implements SplashApp {
     }
 
     private String promptForName(){ ///might move this to the Status board...
-        String name = null;
-        prompter.prompt("Top score, Enter initials: ", "[A-Z]{3}","you did not enter 3 letters" );
-        return name;
+        return prompter.prompt("Top score, Enter initials: ", "[A-Z]{3}","you did not enter 3 letters" );
     }
 
 }

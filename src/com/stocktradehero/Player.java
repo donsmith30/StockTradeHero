@@ -1,6 +1,9 @@
 package com.stocktradehero;
 
+import com.apps.util.Prompter;
+
 import java.util.Map;
+import java.util.Scanner;
 import java.util.TreeMap;
 /*
  * Player
@@ -24,6 +27,8 @@ class Player {
     private double stockBalance = 0.0;
     private double totalBalance;
     private final Map<Stock, Integer> Stocks = new TreeMap<>();
+    Prompter prompter = new Prompter(new Scanner(System.in));
+    private String playerOption;
 
     //constructors
     public Player(String name) {
@@ -32,15 +37,28 @@ class Player {
 
     //methods
     public void buyStock(){
-
+        System.out.println("Player buys Stock");
     }
 
     public void sellStock(){
+        System.out.println("Player Sells stock...");
+    }
 
+    public void playerOption() {
+        setPlayerOption(prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
+                "you did not enter a correct response, must choose one of the following: [B], [S], or [E]."));
     }
 
     //getters & setters
 
+
+    public String getPlayerOption() {
+        return playerOption;
+    }
+
+    public void setPlayerOption(String playerOption) {
+        this.playerOption = playerOption;
+    }
 
     public double getCashBalance() {
         return cashBalance;
