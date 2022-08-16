@@ -122,7 +122,9 @@ public class GameMarket {
         }
         else if (getPlayerOption().equals("C")) {
             System.out.println("Cash Balance: " + currentPlayer.getCashBalance());
-            System.out.println("Stock Balance: "+ currentPlayer.getStockShareBalance());
+            System.out.println("PLAYER STOCK BALANCE");
+            for (Stock item : currentPlayer.getPlayerStocks()) { //maybe use on board?
+                System.out.println("Stock Ticker: "+ item.getTickerSymbol()+ ",Owned shares: " + item.getShares());}
             playerOption();
         }
         else if (getPlayerOption().equals("E")) { endTurn= true;

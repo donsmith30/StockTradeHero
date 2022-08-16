@@ -1,9 +1,10 @@
 package com.stocktradehero;
 
-import com.apps.util.Prompter;
 import com.stocktradehero.app.StockTradeHeroApp;
+import com.stocktradehero.GameMarket;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /*
  * Player
@@ -26,11 +27,13 @@ public class Player {
     private double cashBalance = 1000.0;
     //private double stockBalance = 0.0;
     //private double totalBalance =1000.0;
-    private int stockShareBalance;
+  private int stockShareBalance;  //delete after recode sell method
     private double stockAmountBalance=0.0;
     private double totalAmountBalance;
     private final Map<Stock, Double> StockMap = new HashMap<>();
     double sum = StockMap.values().stream().mapToDouble(d -> d).sum();
+    private final List<Stock> playerStocks = new ArrayList<>();
+
 
 
     //constructors
@@ -44,18 +47,18 @@ public class Player {
         if (stockName.getPrice() * qty > getCashBalance()) {
             System.out.println("Insufficient Balance. Your current cash balance is " + getCashBalance());
         } else {
-
-            for
-            stockShareBalance += qty;
-            stockAmountBalance += qty * stockName.getPrice();
+            stockName.setShares(qty);
+            playerStocks.add(stockName);
+//            stockShareBalance += qty;
+//            stockAmountBalance += qty * stockName.getPrice();
             //stockAmountBalanceList.add(stockAmountBalance);
 
-            List<Stock> stocks = new ArrayList<>();  //TODO: it is newly modified.
-            for(Stock stock : stocks){
-                stockAmountBalance += stockName.getPrice()*qty;
-            }
+//            List<Stock> stocks = new ArrayList<>();  //TODO: it is newly modified.
+//            for(Stock stock : stocks){
+//                stockAmountBalance += stockName.getPrice()*qty;
+//            }
             cashBalance -= qty * stockName.getPrice();
-            totalAmountBalance = getCashBalance() + getStockAmountBalance();
+            //totalAmountBalance = getCashBalance() + getStockAmountBalance(); //rewrite this in the getter
             System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
 
 
@@ -75,11 +78,13 @@ public class Player {
 
 
     public void sellStock(int qty, Stock stockName) throws IllegalArgumentException {
-        if (qty <= getStockShareBalance()) {
-            stockShareBalance -= qty;
-            stockAmountBalance -= qty * stockName.getPrice();
+        stockName=Objects.requireNonNull(getPlayerStocks().stream().filter(Predicate.isEqual(stockName.getTickerSymbol())).findFirst().orElse(getPlayerStocks().get(0)));
+        if (qty <= stockName.getShares()) {
+            stockName.setShares(stockName.getShares()-qty);
+//            stockShareBalance -= qty;
+//            stockAmountBalance -= qty * stockName.getPrice();
             cashBalance += qty * stockName.getPrice();
-            totalAmountBalance = getCashBalance() + getStockAmountBalance();
+//            totalAmountBalance = getCashBalance() + getStockAmountBalance();
             System.out.println(getName() + " just sold " + qty + " shares of " + stockName.getTickerSymbol());
         } else {
             System.out.println("Insufficient stock shares. Your current stock share balance is " + getStockShareBalance() +
@@ -107,8 +112,12 @@ public class Player {
         return cashBalance;
     }
 
-    public int getStockShareBalance() {
+    public int getStockShareBalance() { //delete after recode sell method to include getPlayerStocks
         return stockShareBalance;
+    }
+
+    public List<Stock> getPlayerStocks() {
+        return playerStocks;
     }
 
     public double getStockAmountBalance() {
