@@ -18,17 +18,8 @@ public class StockTradeHeroApp implements SplashApp {
         promptForName();
         Console.pause(250);
         Console.clear();
-        GameMarket.initialize();
-    }
-
-    @Override
-    public void welcome(String... strings) throws IllegalArgumentException {
-        SplashApp.super.welcome(strings);
-    }
-
-    @Override
-    public void welcome(long l, String... strings) throws IllegalArgumentException {
-        SplashApp.super.welcome(l, strings);
+        GameMarket market = new GameMarket();
+        market.initialize();
     }
 
     private String promptForName(){ ///might move this to the Status board...

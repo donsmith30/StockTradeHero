@@ -19,17 +19,17 @@ import java.util.*;
 
 public class GameMarket {
 
-    List<Stock> stocks = new ArrayList<>(List.of(
-            new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH),
-            new Stock("Stock2","STWO", 50., StockType.PRECIOUS_METALS),
-            new Stock("Stock3","THRE", 50., StockType.INDUSTRIAL),
-            new Stock("Stock4","FOUR", 50., StockType.AGRICULTURE)));
-    List<Player> players = new ArrayList<>(List.of(
+    private List<Stock> stocks = new ArrayList<>(List.of( //stockloader.load
+            new Stock("Grapefruit Inc","GRPF", 50.00, StockType.TECH),
+            new Stock("Stock2","STWO", 50.00, StockType.PRECIOUS_METALS),
+            new Stock("Stock3","THRE", 50.00, StockType.INDUSTRIAL),
+            new Stock("Stock4","FOUR", 50.00, StockType.AGRICULTURE)));
+    private List<Player> players = new ArrayList<>(List.of(
             new Player("Player 1"),
             new Player("Player 2"),
             new Player("Player 3")));
-    List<Cards> cards = new ArrayList<>(List.of(Cards.values()));
-    private Cards currentMarketForce;
+    private List<MarketEvent> cards = new ArrayList<>(List.of(MarketEvent.values()));
+    private MarketEvent currentMarketForce;
     private String playerOption;
     private String qty;
     private String stockName;
@@ -40,8 +40,9 @@ public class GameMarket {
     private boolean endTurn = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
 
-    public static void initialize(){
+    public void initialize(){
         //game set-up here
+        playGame();
     }
 
     public void playGame() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
@@ -49,12 +50,12 @@ public class GameMarket {
             System.out.println("Round: " + (i + 1));
             round();
         }
-        for (Player player : players) { //maybe use on board?
+        for (Player player : players) {
             System.out.println(player.getTotalAmountBalance());
         }
     }
 
-    public void round(){ //thinking the order of play will be here
+    private void round(){ //thinking the order of play will be here
         //todo: add shuffle play card and do math on stock values
         //add dividends
         marketForce();
@@ -78,25 +79,28 @@ public class GameMarket {
         System.out.println(currentMarketForce.toString()+"! "+currentMarketForce.getCardText());
        for (Stock item : stocks) {
            if (item.getStockType().equals(StockType.TECH)) {
-               item.setPrice(item.getPrice()*currentMarketForce.getxTech());
-               System.out.println("stock: "+item.getTickerSymbol()+", price: "+item.getPrice());
+               item.setPrice(Math.ceil(item.getPrice()*currentMarketForce.getxTech()));
+               System.out.println("stock: "+item.getTickerSymbol()+", price: $"+item.getPrice());
            }
            else if (item.getStockType().equals(StockType.PRECIOUS_METALS)) {
-               item.setPrice(item.getPrice()*currentMarketForce.getxPreciousMetals());
-               System.out.println("stock: "+item.getTickerSymbol()+", price: "+item.getPrice());
+               item.setPrice(Math.ceil(item.getPrice()*currentMarketForce.getxPreciousMetals()));
+               System.out.println("stock: "+item.getTickerSymbol()+", price: $"+item.getPrice());
            }
            if (item.getStockType().equals(StockType.AGRICULTURE)) {
-               item.setPrice(item.getPrice()*currentMarketForce.getxAgriculture());
-               System.out.println("stock: "+item.getTickerSymbol()+", price: "+item.getPrice());
+               item.setPrice(Math.ceil(item.getPrice()*currentMarketForce.getxAgriculture()));
+               System.out.println("stock: "+item.getTickerSymbol()+", price: $"+item.getPrice());
            }
            if (item.getStockType().equals(StockType.INDUSTRIAL)) {
-               item.setPrice(item.getPrice()*currentMarketForce.getxIndustrial());
-               System.out.println("stock: "+item.getTickerSymbol()+", price: "+item.getPrice());
+               item.setPrice(Math.ceil(item.getPrice()*currentMarketForce.getxIndustrial()));
+               System.out.println("stock: "+item.getTickerSymbol()+", price: $"+item.getPrice());
            }
       }
     }
 
-    public void turn(){  //need to find way to not change price if purchase or sale doesn't happen
+    //add blank lines "Console.blanklines(2)"
+    //private everything inside
+
+    private void turn(){  //need to find way to not change price if purchase or sale doesn't happen
         boolean endTurn = false;
         playerOption();
         while (!endTurn) {
@@ -105,9 +109,9 @@ public class GameMarket {
             qtyPrompt();
             Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
             currentPlayer.buyStock(Integer.parseInt(getQty()), s1);
-            System.out.println("old stock price " + s1.getPrice());
-            s1.setPrice(s1.getPrice() * (1 + s1.getStockVolatility()));
-            System.out.println("New stock price " + s1.getPrice());
+            System.out.println("old stock price $" + s1.getPrice());
+            s1.setPrice(Math.ceil(s1.getPrice() * (1 + s1.getStockVolatility())));
+            System.out.println("New stock price $" + s1.getPrice());
             playerOption();
         }
         else if ( getPlayerOption().equals("S")) {
@@ -115,9 +119,9 @@ public class GameMarket {
             qtyPrompt();
             Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
             currentPlayer.sellStock(Integer.parseInt(getQty()),s1);
-            System.out.println("old stock price " + s1.getPrice());
-            s1.setPrice(s1.getPrice() * (1-s1.getStockVolatility()));
-            System.out.println("New stock price " + s1.getPrice());
+            System.out.println("old stock price $" + s1.getPrice());
+            s1.setPrice(Math.ceil(s1.getPrice() * (1-s1.getStockVolatility())));
+            System.out.println("New stock price $" + s1.getPrice());
             playerOption();
         }
         else if (getPlayerOption().equals("C")) {
@@ -134,18 +138,19 @@ public class GameMarket {
 
     public void stockPrompt() {
         for (Stock item : stocks) { //maybe use on board?
-            System.out.println("Stock Ticker: "+ item.getTickerSymbol()+ ",Stock Price: " + item.getPrice() );}
+            System.out.println("Stock Ticker: "+ item.getTickerSymbol()+ ",Stock Price: $" + item.getPrice() );}
         setStockName(prompter.prompt("Stocks for sale: " + "Enter the ticker symbol for the stock: ", "[A-Z]{4}",
                 "please enter a valid stock"));
     }
 
     public void qtyPrompt() {
-        setQty(prompter.prompt("You have $"+currentPlayer.getCashBalance()+", Enter the amount: ", "[0-9]{1,2}",
+        setQty(prompter.prompt("You have $"+currentPlayer.getCashBalance()+", Enter the amount of shares you would like to purchase: ", "[0-9]{1,2}",
                 "please enter a valid number"));
     }
 
     public void playerOption() {
-        setPlayerOption(prompter.prompt(currentPlayer.getName()+" Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn :", "[A-Z]{1}",
+        Console.blankLines(2);
+    setPlayerOption(prompter.prompt(currentPlayer.getName()+" Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[A-Z]{1}",
                 "you did not enter a correct response, must choose one of the following: [B], [S], [C] or [E]."));
     }
 
