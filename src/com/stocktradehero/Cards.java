@@ -24,10 +24,10 @@ enum Cards {
     PANDEMIC(0.7, 0.7, 0.7, 0.7, "There is a new pandemic. The market is down 30%"),
     INFLATION_DOWN(1.1, 1.1, 1.1, 1.1, "Inflation is down. Market is up 10%"),
     INFLATION_UP(0.9, 0.9, 0.9, 0.9, "Inflation is up. Market is down 10%"),
-    POSITIVE_EARNINGS(1, 1, 1, 1, "This stock has had a positive earnings report"), // Individual stock
-    NEGATIVE_EARNINGS(1, 1, 1,1, "This stock has had a negative earnings report"), // Individual stock
-    GOOD_BEHAVIOR(1, 1, 1, 1, "This company is in the news for improving the world"), // Individual stock
-    BAD_BEHAVIOR(1, 1, 1, 1, "This company is in the news for some egregious executive behavior"); // Individual stock
+    POSITIVE_EARNINGS(1.3, 1.3, 1.3, 1.3, "All stocks have had a positive earnings report"),
+    NEGATIVE_EARNINGS(.6, .6, .6,.6, "All stocks have had a negative earnings report");
+//    GOOD_BEHAVIOR(1, 1, 1, 1, "This company is in the news for improving the world"), // Individual stock
+//    BAD_BEHAVIOR(1, 1, 1, 1, "This company is in the news for some egregious executive behavior"); // Individual stock
 
     private double xTech;
     private double xPreciousMetals;
