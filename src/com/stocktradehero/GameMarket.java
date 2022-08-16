@@ -12,6 +12,7 @@ package com.stocktradehero;
  * giveStock() -- to Player
  */
 
+import com.apps.util.Console;
 import com.apps.util.Prompter;
 
 import java.util.*;
@@ -23,9 +24,6 @@ public class GameMarket {
             new Stock("Stock2","STWO", 50., StockType.PRECIOUS_METALS),
             new Stock("Stock3","THRE", 50., StockType.INDUSTRIAL),
             new Stock("Stock4","FOUR", 50., StockType.AGRICULTURE)));
-    Player p1 = new Player("Player 1");
-    Player p2 = new Player("Player 2");
-    Player p3 = new Player("Player 3");
     List<Player> players = new ArrayList<>(List.of(
             new Player("Player 1"),
             new Player("Player 2"),
@@ -35,17 +33,12 @@ public class GameMarket {
     private String stockName;
     private int rounds = 5;
     private int currentRound;
-    private Player currentPlayer=p1;
+    private Player currentPlayer;
     private boolean gameOver = false;
     private boolean endTurn = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
 
     public static void initialize(){
-//        Player p1 = new Player("Player 1");
-//        Player p2 = new Player("Player 2");
-//        Player p3 = new Player("Player 3");
-//        Stock s1 = new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH);
-//        System.out.println(p1.getName()+ " It is your turn...");
 
     }
 
@@ -58,6 +51,7 @@ public class GameMarket {
         for (Player roundPlayer: players
              ) {currentPlayer = roundPlayer;
             turn();
+            Console.clear();
         }
     }
 
