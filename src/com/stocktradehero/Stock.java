@@ -56,4 +56,8 @@ public class Stock {
         return this.stockType.getStockDividend();
     }
 
+    public StockType getStockType() {
+        return stockType;
+    }
+
 }

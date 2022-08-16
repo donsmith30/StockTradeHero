@@ -42,4 +42,44 @@ enum Cards {
         this.xAgriculture = xAgriculture;
         this.cardText = cardText;
     }
+
+    public double getxTech() {
+        return xTech;
+    }
+
+    public void setxTech(double xTech) {
+        this.xTech = xTech;
+    }
+
+    public double getxPreciousMetals() {
+        return xPreciousMetals;
+    }
+
+    public void setxPreciousMetals(double xPreciousMetals) {
+        this.xPreciousMetals = xPreciousMetals;
+    }
+
+    public double getxIndustrial() {
+        return xIndustrial;
+    }
+
+    public void setxIndustrial(double xIndustrial) {
+        this.xIndustrial = xIndustrial;
+    }
+
+    public double getxAgriculture() {
+        return xAgriculture;
+    }
+
+    public void setxAgriculture(double xAgriculture) {
+        this.xAgriculture = xAgriculture;
+    }
+
+    public String getCardText() {
+        return cardText;
+    }
+
+    public void setCardText(String cardText) {
+        this.cardText = cardText;
+    }
 }
