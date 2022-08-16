@@ -14,6 +14,7 @@ public class Stock {
     private String companyName;
     private String tickerSymbol;
     private double price;
+    private int shares;
     private final StockType stockType;
 
     public Stock(String companyName, String tickerSymbol, double price, StockType stockType) {
@@ -60,4 +61,11 @@ public class Stock {
         return stockType;
     }
 
+    public int getShares() {
+        return shares;
+    }
+
+    public void setShares(int shares) {
+        this.shares = shares;
+    }
 }
