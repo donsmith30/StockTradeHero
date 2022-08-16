@@ -49,8 +49,8 @@ public class Player {
         } else {
             stockName.setShares(qty);
             playerStocks.add(stockName); //TODO: TreeList
-//            stockShareBalance += qty;
-//            stockAmountBalance += qty * stockName.getPrice();
+            stockShareBalance += qty;
+            stockAmountBalance += qty * stockName.getPrice();
             //stockAmountBalanceList.add(stockAmountBalance);
 
 //            List<Stock> stocks = new ArrayList<>();
@@ -60,7 +60,7 @@ public class Player {
             cashBalance -= qty * stockName.getPrice();
             stockName.setPrice(Math.ceil(stockName.getPrice() * (1 + stockName.getStockVolatility())));
 
-            //totalAmountBalance = getCashBalance() + getStockAmountBalance(); //rewrite this in the getter
+            totalAmountBalance = getCashBalance() + getStockAmountBalance(); //rewrite this in the getter
             System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol() +
                     ", which drave its current price to " + df.format(stockName.getPrice()));
 
@@ -85,11 +85,11 @@ public class Player {
         //Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)))
         if (qty <= stockName.getShares()) {
             stockName.setShares(stockName.getShares() - qty);
-//            stockShareBalance -= qty;
-//            stockAmountBalance -= qty * stockName.getPrice();
+            stockShareBalance -= qty;
+            stockAmountBalance -= qty * stockName.getPrice();
             cashBalance += qty * stockName.getPrice();
-//            totalAmountBalance = getCashBalance() + getStockAmountBalance();
-            stockName.setPrice(Math.ceil(stockName.getPrice() * (1-stockName.getStockVolatility())));
+            totalAmountBalance = getCashBalance() + getStockAmountBalance();
+            stockName.setPrice(Math.ceil(stockName.getPrice() * (1 - stockName.getStockVolatility())));
             System.out.println(getName() + " just sold " + qty + " shares of " + stockName.getTickerSymbol());
         } else {
             System.out.println("Insufficient stock shares. Your current stock share balance is " + getStockShareBalance() +
