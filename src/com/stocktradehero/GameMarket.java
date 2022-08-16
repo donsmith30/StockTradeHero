@@ -68,12 +68,26 @@ public class GameMarket {
     public void marketForce() {
         Collections.shuffle(cards);
         currentMarketForce=cards.get(0);
-        System.out.println(currentMarketForce.toString());
+        System.out.println(currentMarketForce.toString()+"! "+currentMarketForce.getCardText());
        for (Stock item : stocks) {
-           if (item.getStockType=StockType.TECH) {//need getter for stock type
-               item.setPrice(item.getPrice()*currentMarketForce.getXTech);
+           if (item.getStockType().equals(StockType.TECH)) {
+               item.setPrice(item.getPrice()*currentMarketForce.getxTech());
+               System.out.println("stock: "+item.getTickerSymbol()+"price: "+item.getPrice());
+           }
+           else if (item.getStockType().equals(StockType.PRECIOUS_METALS)) {
+               item.setPrice(item.getPrice()*currentMarketForce.getxPreciousMetals());
+               System.out.println("stock: "+item.getTickerSymbol()+"price: "+item.getPrice());
+           }
+           if (item.getStockType().equals(StockType.AGRICULTURE)) {
+               item.setPrice(item.getPrice()*currentMarketForce.getxAgriculture());
+               System.out.println("stock: "+item.getTickerSymbol()+"price: "+item.getPrice());
+           }
+           if (item.getStockType().equals(StockType.INDUSTRIAL)) {
+               item.setPrice(item.getPrice()*currentMarketForce.getxIndustrial());
+               System.out.println("stock: "+item.getTickerSymbol()+"price: "+item.getPrice());
            }
       }
+       Console.clear();
     }
 
     public void turn(){  //need to find way to not change price if purchase or sale doesn't happen
