@@ -48,7 +48,7 @@ public class GameMarket {
         playGame();
     }
 
-    public void playGame() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
+    private void playGame() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
         for (int i = 0; i < rounds; i++) {
             System.out.println("Round: " + (i + 1));
             round();
@@ -69,14 +69,14 @@ public class GameMarket {
         }
     }
 
-    public void payDividends(){
+    private void payDividends(){
         for (Player player: players
              ) {
             // player.getStock
         }
     }
 
-    public void marketForce() {
+    private void marketForce() {
         Collections.shuffle(cards);
         currentMarketForce=cards.get(0);
         System.out.println(currentMarketForce.toString()+"! "+currentMarketForce.getCardText());
@@ -152,6 +152,7 @@ public class GameMarket {
                 s1.setPrice(Math.ceil(s1.getPrice() * (1+((entry.getValue() * .1)/3)) *  (1 + s1.getStockVolatility())));
                 s2.setPrice(Math.ceil(s1.getPrice() * (1+((entry.getValue() * .1)/3)) *  (1 + s1.getStockVolatility())));
                 System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
+                buyTransactions.clear();
                 //currentPlayer.getStockAmountBalance();
             }
             for (Map.Entry<String,Integer> entry : sellTransactions.entrySet()
@@ -162,23 +163,24 @@ public class GameMarket {
                 s1.setPrice(Math.ceil(s1.getPrice() * (1-((entry.getValue() * .1)/3)) *  (1-s1.getStockVolatility())));
                 s2.setPrice(Math.ceil(s1.getPrice() * (1-((entry.getValue() * .1)/3)) *  (1-s1.getStockVolatility())));
                 System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
+                sellTransactions.clear();
                 //currentPlayer.getStockAmountBalance();
             }
         }
         }
     }
 
-    public void stockPrompt() {
+    private void stockPrompt() {
         setStockName(prompter.prompt("Enter the ticker symbol for the stock: ", "[A-Z]{4}",
                 "please enter a valid stock"));
     }
 
-    public void qtyPrompt() {
+    private void qtyPrompt() {
         setQty(prompter.prompt("You have $"+currentPlayer.getCashBalance()+", Enter the amount of shares: ", "[0-9]{1,2}",
                 "please enter a valid number"));
     }
 
-    public void playerOption() {
+    private void playerOption() {
         Console.blankLines(2);//todo: use these lines for board, replace with a board.show() method
         System.out.println("C U R R E N T  P R I C E S");
         for (Stock item : stocks) {
