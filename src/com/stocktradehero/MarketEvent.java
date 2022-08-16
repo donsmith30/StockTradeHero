@@ -16,7 +16,7 @@ package com.stocktradehero;
  * food shortage (drought), climate emergency, oil shortage, bad company behavior, company earnings
  */
 
-enum Cards {
+enum MarketEvent { //consider MarketEvent
 
     CHIP_SHORTAGE(.8,1,1,1, "There is a chip shortage. Tech stocks are down 20%"),
     FOOD_SHORTAGE(1, 1, 1, 0.8, "There is a food shortage. Agricultural stocks are down 10%"),
@@ -35,7 +35,7 @@ enum Cards {
     private double xAgriculture;
     private String cardText;
 
-    Cards(double xTech, double xPreciousMetals, double xIndustrial, double xAgriculture, String cardText) {
+    MarketEvent(double xTech, double xPreciousMetals, double xIndustrial, double xAgriculture, String cardText) {
         this.xTech = xTech;
         this.xPreciousMetals = xPreciousMetals;
         this.xIndustrial = xIndustrial;
