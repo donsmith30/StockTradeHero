@@ -78,7 +78,8 @@ public class Player {
 
 
     public void sellStock(int qty, Stock stockName) throws IllegalArgumentException {
-        stockName=Objects.requireNonNull(getPlayerStocks().stream().filter(Predicate.isEqual(stockName.getTickerSymbol())).findFirst().orElse(getPlayerStocks().get(0)));
+        Stock s1=Objects.requireNonNull(getPlayerStocks().stream().filter(stock -> stockName.equals(stock.getTickerSymbol())).findFirst().orElse(getPlayerStocks().get(0)));
+        //Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)))
         if (qty <= stockName.getShares()) {
             stockName.setShares(stockName.getShares()-qty);
 //            stockShareBalance -= qty;
@@ -96,8 +97,12 @@ public class Player {
 
     //TODO: it is newly modified.
     public void printBalance() {
-        System.out.printf("%s: name=%s, cashBalance=%s, stockBalance=%s,totalBalance=%s", getClass().getSimpleName(), getName(),
+        System.out.printf("%s: name=%s, cashBalance=%s, stockBalance=%s,totalBalance=%s \n", getClass().getSimpleName(), getName(),
                 getCashBalance(), getStockAmountBalance(), getTotalAmountBalance());
+        System.out.println("PLAYER STOCK BALANCE");
+        for (Stock item : getPlayerStocks()) {
+            System.out.println("Stock Ticker: " + item.getTickerSymbol() + ",Owned shares: " + item.getShares());
+        }
     }
 
 
