@@ -26,40 +26,42 @@ public class GameMarket {
     Player p1 = new Player("Player 1");
     Player p2 = new Player("Player 2");
     Player p3 = new Player("Player 3");
+    List<Player> players = new ArrayList<>(List.of(
+            new Player("Player 1"),
+            new Player("Player 2"),
+            new Player("Player 3")));
+    private String playerOption;
     private String qty;
     private String stockName;
-    private int turns = 5;
+    private int rounds = 5;
     private int currentRound;
     private Player currentPlayer=p1;
     private boolean gameOver = false;
     private boolean endTurn = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
 
-
-
-
-
     public static void initialize(){
-        Player p1 = new Player("Player 1");
-        Player p2 = new Player("Player 2");
-        Player p3 = new Player("Player 3");
-        Stock s1 = new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH);
-        System.out.println(p1.getName()+ " It is your turn...");
+//        Player p1 = new Player("Player 1");
+//        Player p2 = new Player("Player 2");
+//        Player p3 = new Player("Player 3");
+//        Stock s1 = new Stock("Grapefruit Inc","GRPF", 50., StockType.TECH);
+//        System.out.println(p1.getName()+ " It is your turn...");
 
     }
 
-    public void play() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
+    public void playGame() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
 
     }
 
     public void round(){ //thinking the order of play will be here
-         ;
-
+        //todo: add shuffle play card and do math on stock values
+        for (Player roundPlayer: players
+             ) {currentPlayer = roundPlayer;
+            turn();
+        }
     }
 
-
-
-    public void turn(){
+    public void turn(){  //need to find way to not change price if purchase or sale doesn't happen
         boolean endTurn = false;
         currentPlayer.playerOption();
         while (!endTurn) {
@@ -90,13 +92,20 @@ public class GameMarket {
     }
 
     public void stockPrompt() {
-        setStockName(prompter.prompt("Enter the ticker symbol of the stock you want to purchase: ", "[A-Z]{4}",
+        for (Stock item : stocks) { //maybe use on board?
+            System.out.println("Stock Ticker: "+ item.getTickerSymbol()+ "Stock Price: " + item.getPrice());}
+        setStockName(prompter.prompt("Stocks for sale: " + "Enter the ticker symbol for the stock: ", "[A-Z]{4}",
                 "please enter a valid stock"));
     }
 
     public void qtyPrompt() {
-        setQty(prompter.prompt("Enter the amount you want to purchase: ", "[0-9]",
+        setQty(prompter.prompt("You have $"+currentPlayer.getCashBalance()+", Enter the amount: ", "[0-9]{2}",
                 "please enter a valid number"));
+    }
+
+    public void playerOption() {
+        prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
+                "you did not enter a correct response, must choose one of the following: [B], [S], or [E].");
     }
 
     //get & set
@@ -116,18 +125,18 @@ public class GameMarket {
     public void setStockName(String stockName) {
         this.stockName = stockName;
     }
-
-
-    /*
-    public void playerOption(){
-        prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
-                "you did not enter a correct response, must choose one of the following: [B], [S], or [E]." );
+    public String getPlayerOption() {
+        return playerOption;
     }
 
-     */
+    public void setPlayerOption(String playerOption) {
+        this.playerOption = playerOption;
+    }
+
+    //main test
 
     public static void main(String[] args) {
         GameMarket game = new GameMarket();
-        game.turn();
+        game.round();
     }
 }
