@@ -1,0 +1,21 @@
+companyName,tickerSymbol,price,stockType
+Grapefruit Inc.,GRPF,150,StockType.TECH
+MyBook,MYBK,100,StockType.TECH
+Boogle,BOOG,50,StockType.TECH
+Interflix,IFLX,50,StockType.TECH
+Rating Analyzer,RTNG,30,StockType.TECH
+Palladium,PALL,10,StockType.PRECIOUS_METALS
+Rhodium,RHOD,30,StockType.PRECIOUS_METALS
+Iridium,IRDM,20,StockType.PRECIOUS_METALS
+Osmium,OSM,40,StockType.PRECIOUS_METALS
+Platinum,PLAT,50,StockType.PRECIOUS_METALS
+SteelTown LLC.,STLT,60,StockType.INDUSTRIAL
+Youngstown Mills,YGTN,100,StockType.INDUSTRIAL
+Waste Disposal,WD,50,StockType.INDUSTRIAL
+Duck Racer,DUCK,40,StockType.INDUSTRIAL
+Butterfly,BFLY,80,StockType.INDUSTRIAL
+Corn Industries,CORN,120,StockType.AGRICULTURE
+Whole Grain Inc.,WGRN,30,StockType.AGRICULTURE
+Nothing But Wheat,NBW,60,StockType.AGRICULTURE
+Old McDonald Farms,FARM,50,StockType.AGRICULTURE
+Manure R US,POO,70,StockType.AGRICULTURE
