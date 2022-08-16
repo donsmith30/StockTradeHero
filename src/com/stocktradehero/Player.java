@@ -1,6 +1,7 @@
 package com.stocktradehero;
 
 import com.apps.util.Prompter;
+import com.stocktradehero.app.StockTradeHeroApp;
 
 import java.util.*;
 
@@ -23,15 +24,15 @@ public class Player {
     //attributes
     private String name;
     private double cashBalance = 1000.0;
-    private double stockBalance = 0.0;
-    private double totalBalance;
+    //private double stockBalance = 0.0;
+    //private double totalBalance =1000.0;
     private String playerOption;
     private int stockShareBalance;
-    private double stockAmountBalance;
+    private double stockAmountBalance=0.0;
     private double totalAmountBalance;
     Prompter prompter = new Prompter(new Scanner(System.in));
-    private final List<Stock> stocks = new ArrayList<>();  //TODO
-    //private final Map<Stock, Integer> Stocks = new TreeMap<>();
+    //private final Map<Stock, Double> StocksAmountBalanceMap = new HashMap<>();
+   // double sum = StocksAmountBalanceMap.values().stream().mapToDouble(d -> d).sum();
 
 
     //constructors
@@ -40,6 +41,7 @@ public class Player {
     }
 
 
+//TODO: stock price up and down by buying and selling.
 
     //methods
     public void playerOption() {
@@ -52,13 +54,22 @@ public class Player {
             System.out.println("Insufficient Balance. Your current cash balance is " + getCashBalance());
         } else {
             stockShareBalance += qty;
-            stockAmountBalance += qty * stockName.getPrice();
+            //stockAmountBalance += qty * stockName.getPrice();
+            //stockAmountBalanceList.add(stockAmountBalance);
+            List<Stock> stocks = new ArrayList<>();  //TODO: it is newly modified.
+            for(Stock stock : stocks){
+                stockAmountBalance += stockName.getPrice()*qty;
+            }
             cashBalance -= qty * stockName.getPrice();
             totalAmountBalance = getCashBalance() + getStockAmountBalance();
             System.out.println(getName() + " just bought " + qty + " shares of " + stockName);
 
 
         }
+
+
+
+
     }
 
     public void sellStock(int qty, Stock stockName) throws IllegalArgumentException {
@@ -76,50 +87,22 @@ public class Player {
 
     //Map<Stock, int> stockMap = new HashMap<>();
 
-
+    //TODO: it is newly modified.
     public void printBalance() {
-        System.out.println(getName() + "'cash balance is " + getCashBalance() +
-                ". Total stock amount balance is " + getStockAmountBalance()
-                + ". Total balance is " + getTotalAmountBalance());
+        System.out.printf("%s: name=%s, cashBalance=%s, stockBalance=%s,totalBalance=%s", getClass().getSimpleName(), getName(),
+                getCashBalance(), getStockAmountBalance(), getTotalAmountBalance());
     }
 
 
     //getters & setters
+
+
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public double getCashBalance() {
         return cashBalance;
-    }
-
-
-    public double getStockBalance() {
-        return stockBalance;
-    }
-
-    public double getTotalBalance() {
-        return totalBalance;
-    }
-
-    public Prompter getPrompter() {
-        return prompter;
-    }
-
-    public void setPrompter(Prompter prompter) {
-        this.prompter = prompter;
-    }
-
-    public String getPlayerOption() {
-        return playerOption;
-    }
-
-    public void setPlayerOption(String playerOption) {
-        this.playerOption = playerOption;
     }
 
     public int getStockShareBalance() {
@@ -133,4 +116,11 @@ public class Player {
     public double getTotalAmountBalance() {
         return totalAmountBalance;
     }
+
+    public void setPlayerOption(String playerOption) {
+        this.playerOption = playerOption;
+    }
+
+
+
 }
