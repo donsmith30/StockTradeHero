@@ -1,5 +1,8 @@
 package com.stocktradehero;
 
+import java.io.IOException;
+import java.util.List;
+
 /*
  * Stock
  * attributes:
@@ -16,6 +19,7 @@ public class Stock {
     private double price;
     private int shares;
     private final StockType stockType;
+
 
     public Stock(String companyName, String tickerSymbol, double price, StockType stockType) {
         this.companyName = companyName;
@@ -68,4 +72,5 @@ public class Stock {
     public void setShares(int shares) {
         this.shares = shares;
     }
+
 }
