@@ -14,8 +14,6 @@ package com.stocktradehero;
  * setName() --- if player score is top 10 all time
  */
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,25 +21,32 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-class StatusBoard extends Stock {
+public class StatusBoard {
 
     private double playerNetWorth;
-    private double stockPrice = getPrice();
-    private final List<Player> winners = new ArrayList<>();
-
+//    private double stockPrice = getPrice();
+//    private final List<Player> winners = new ArrayList<>();
+//    public final List<Stock> stocksList = loadStocksList();
     private final static String COMMA_DELIMITER = ",";
+    private final Path dataFilepath;
 
-    public static void main(String[] args) throws IOException {
-        List<List<String>> result = Files.readAllLines(Paths.get("conf/Stocks.csv"))
-                .stream()
-                .map(line -> Arrays.asList(line.split(COMMA_DELIMITER)))
-                .collect(Collectors.toList());
-        System.out.println(result);
+    public StatusBoard(String dataFilePath) {
+        this.dataFilepath = Path.of(dataFilePath);
     }
 
+    public List<Stock> load() throws IOException {
+        List<Stock> stocksList = new ArrayList<>();
 
-    public StatusBoard(String companyName, String tickerSymbol, double price, StockType stockType) {
-        super(companyName, tickerSymbol, price, stockType);
+        Files.readAllLines(dataFilepath).forEach(line -> {
+            String[] tokens = line.split(",");
+
+            String companyName = tokens[0];
+            String tickerSymbol = tokens [1];
+            Double price = Double.valueOf(tokens[2]);
+            StockType stockType = StockType.valueOf(tokens[3]);
+
+            stocksList.add(new Stock(companyName, tickerSymbol, price, stockType));
+        });
+        return stocksList;
     }
-
 }
