@@ -29,8 +29,8 @@ public class Player {
     private int stockShareBalance;
     private double stockAmountBalance=0.0;
     private double totalAmountBalance;
-    //private final Map<Stock, Double> StocksAmountBalanceMap = new HashMap<>();
-   // double sum = StocksAmountBalanceMap.values().stream().mapToDouble(d -> d).sum();
+    private final Map<Stock, Double> StockMap = new HashMap<>();
+    double sum = StockMap.values().stream().mapToDouble(d -> d).sum();
 
 
     //constructors
@@ -38,33 +38,41 @@ public class Player {
         this.name = name;
     }
 
-
-//TODO: stock price up and down by buying and selling.
-
     //methods
 
     public void buyStock(int qty, Stock stockName) {
         if (stockName.getPrice() * qty > getCashBalance()) {
             System.out.println("Insufficient Balance. Your current cash balance is " + getCashBalance());
         } else {
+
+            for
             stockShareBalance += qty;
-            //stockAmountBalance += qty * stockName.getPrice();
+            stockAmountBalance += qty * stockName.getPrice();
             //stockAmountBalanceList.add(stockAmountBalance);
+
             List<Stock> stocks = new ArrayList<>();  //TODO: it is newly modified.
             for(Stock stock : stocks){
                 stockAmountBalance += stockName.getPrice()*qty;
             }
             cashBalance -= qty * stockName.getPrice();
             totalAmountBalance = getCashBalance() + getStockAmountBalance();
-            System.out.println(getName() + " just bought " + qty + " shares of " + stockName);
+            System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
 
 
         }
 
 
-
-
     }
+
+    /*
+    private Map<Stock, Double> loadStockMap() {  //TODO: modifying it.
+        Map<Stock,Double> stockMap = new HashMap<>();
+        return stockMap;
+    }
+
+
+     */
+
 
     public void sellStock(int qty, Stock stockName) throws IllegalArgumentException {
         if (qty <= getStockShareBalance()) {
@@ -72,7 +80,7 @@ public class Player {
             stockAmountBalance -= qty * stockName.getPrice();
             cashBalance += qty * stockName.getPrice();
             totalAmountBalance = getCashBalance() + getStockAmountBalance();
-            System.out.println(getName() + " just sold " + qty + " shares of " + stockName);
+            System.out.println(getName() + " just sold " + qty + " shares of " + stockName.getTickerSymbol());
         } else {
             System.out.println("Insufficient stock shares. Your current stock share balance is " + getStockShareBalance() +
                     " Please try again! ");
@@ -104,7 +112,7 @@ public class Player {
     }
 
     public double getStockAmountBalance() {
-        return stockAmountBalance;
+        return stockAmountBalance;  //TODO
     }
 
     public double getTotalAmountBalance() {
