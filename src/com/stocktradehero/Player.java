@@ -26,11 +26,9 @@ public class Player {
     private double cashBalance = 1000.0;
     //private double stockBalance = 0.0;
     //private double totalBalance =1000.0;
-    private String playerOption;
     private int stockShareBalance;
     private double stockAmountBalance=0.0;
     private double totalAmountBalance;
-    Prompter prompter = new Prompter(new Scanner(System.in));
     //private final Map<Stock, Double> StocksAmountBalanceMap = new HashMap<>();
    // double sum = StocksAmountBalanceMap.values().stream().mapToDouble(d -> d).sum();
 
@@ -44,10 +42,6 @@ public class Player {
 //TODO: stock price up and down by buying and selling.
 
     //methods
-    public void playerOption() {
-        setPlayerOption(prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
-                "you did not enter a correct response, must choose one of the following: [B], [S], or [E]."));
-    }
 
     public void buyStock(int qty, Stock stockName) {
         if (stockName.getPrice() * qty > getCashBalance()) {
@@ -116,11 +110,5 @@ public class Player {
     public double getTotalAmountBalance() {
         return totalAmountBalance;
     }
-
-    public void setPlayerOption(String playerOption) {
-        this.playerOption = playerOption;
-    }
-
-
 
 }

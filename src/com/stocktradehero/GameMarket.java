@@ -63,9 +63,9 @@ public class GameMarket {
 
     public void turn(){  //need to find way to not change price if purchase or sale doesn't happen
         boolean endTurn = false;
-        currentPlayer.playerOption();
+        playerOption();
         while (!endTurn) {
-        if (currentPlayer.getPlayerOption().equals("B")) {
+        if (getPlayerOption().equals("B")) {
             stockPrompt();
             qtyPrompt();
             Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
@@ -73,9 +73,9 @@ public class GameMarket {
             System.out.println("old stock price " + s1.getPrice());
             s1.setPrice(s1.getPrice() * (1 + s1.getStockVolatility()));
             System.out.println("New stock price " + s1.getPrice());
-            currentPlayer.playerOption();
+            playerOption();
         }
-        else if ( currentPlayer.getPlayerOption().equals("S")) {
+        else if ( getPlayerOption().equals("S")) {
             stockPrompt();
             qtyPrompt();
             Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
@@ -83,9 +83,9 @@ public class GameMarket {
             System.out.println("old stock price " + s1.getPrice());
             s1.setPrice(s1.getPrice() * (1-s1.getStockVolatility()));
             System.out.println("New stock price " + s1.getPrice());
-            currentPlayer.playerOption();
+            playerOption();
         }
-        else if (currentPlayer.getPlayerOption().equals("E")) { endTurn= true;
+        else if (getPlayerOption().equals("E")) { endTurn= true;
             System.out.println("Ending turn...");
         }
         }
@@ -104,8 +104,8 @@ public class GameMarket {
     }
 
     public void playerOption() {
-        prompter.prompt("Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
-                "you did not enter a correct response, must choose one of the following: [B], [S], or [E].");
+        setPlayerOption(prompter.prompt(currentPlayer.getName()+" Choose one of the following, [B]uy stocks, [S]ell stocks, or [E]nd turn :", "[A-Z]{1}",
+                "you did not enter a correct response, must choose one of the following: [B], [S], or [E]."));
     }
 
     //get & set
