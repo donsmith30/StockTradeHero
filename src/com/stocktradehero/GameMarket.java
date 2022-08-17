@@ -175,8 +175,6 @@ public class GameMarket {
                     s1.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
                     s2.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
                     System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
-
-                    //currentPlayer.getStockAmountBalance();
                 }
                 for (Map.Entry<String, Integer> entry : sellTransactions.entrySet()
                 ) {
