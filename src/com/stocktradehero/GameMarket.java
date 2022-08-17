@@ -79,7 +79,6 @@ public class GameMarket {
         marketForce();
         payDividends();
         System.out.println("Markets are opening soon...");
-        Console.pause(1000);
         System.out.println("...");
         Console.pause(3000);
         Console.clear();
@@ -177,8 +176,8 @@ public class GameMarket {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     System.out.println(s1.getTickerSymbol() + ", old stock price -> " + df.format(s1.getPrice()));
-                    s1.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
-                    s2.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
+                    s1.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
+                    s2.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
                     System.out.println(s1.getTickerSymbol() + ", new stock price -> " + df.format(s1.getPrice()));
                 }
                 buyTransactions.clear();
@@ -216,7 +215,7 @@ public class GameMarket {
 
     private void showGameBoard() { //todo: move these lines for board, replace with a board.show() method
         Console.blankLines(1);
-        System.out.println("---C U R R E N T  P R I C E S---");
+        System.out.println("---C U R R E N T  P R I C E S---  \nMarket Event: " +currentMarketForce.getCardText());
         for (Stock item : stocks) {
             System.out.println("Company: " + item.getCompanyName()+ ", stock volatility: " + item.getStockVolatility() + ", ROI: "+ item.getStockDividend() + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
         }
