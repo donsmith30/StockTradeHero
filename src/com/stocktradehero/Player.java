@@ -69,11 +69,12 @@ public class Player {
     }
 
     public void printBalance() {
-        System.out.printf("%s: name=%s, cashBalance=%s, stockBalance=%s,totalBalance=%s \n", getClass().getSimpleName(), getName(),
+        System.out.println("PLAYER NET WORTH");
+        System.out.printf("%s: name= %s, cashBalance= %s, stockBalance= %s,totalBalance= %s \n", getClass().getSimpleName(), getName(),
                 df.format(getCashBalance()), df.format(getStockAmountBalance()), df.format(getTotalAmountBalance()));
-        System.out.println("PLAYER STOCK BALANCE: ");
+        System.out.println("PLAYER STOCK BALANCE");
         for (Stock item : getPlayerStocks()) {
-            System.out.println("Stock Ticker: " + item.getTickerSymbol() + ",Owned shares: " + item.getShares());
+            System.out.println("Stock Ticker: " + item.getTickerSymbol() + ", owned shares: " + item.getShares());
         }
     }
 
