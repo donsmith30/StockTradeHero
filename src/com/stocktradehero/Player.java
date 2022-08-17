@@ -47,10 +47,20 @@ public class Player {
         }
         else{
 
+            /*
             Stock s1 = getPlayerStocks().stream().filter(stock -> stockName.equals(stock.getTickerSymbol())).findFirst().orElse(getPlayerStocks().get(0));
-            int newShares = s1.getShares()+qty;
+
+            int newShares = s1.getShares() + qty;
             playerStocks.remove(s1);
             stockName.setShares(newShares);
+
+
+             */
+            int newShares= stockName.getShares()+qty;
+            playerStocks.remove(stockName);
+            stockName.setShares(newShares);
+
+
             playerStocks.add(stockName);
             cashBalance -= qty * stockName.getPrice();
             System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
@@ -97,17 +107,15 @@ public class Player {
 
     public double getStockAmountBalance() {
         double result = 0.0;
-        for (Stock stock: playerStocks){
-            result = result + (stock.getPrice()*stock.getShares());
+        for (Stock stock : playerStocks) {
+            result = result + (stock.getPrice() * stock.getShares());
         }
         return result;
     }
 
     public double getTotalAmountBalance() {
         double result = 0.0;
-        result=getStockAmountBalance()+getCashBalance();
+        result = getStockAmountBalance() + getCashBalance();
         return result;
     }
-
-
 }
