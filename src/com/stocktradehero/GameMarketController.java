@@ -166,6 +166,11 @@ public class GameMarketController {
             } else if (getPlayerOption().equals("C")) {
                 currentPlayer.printBalance();
                 playerOption();
+            } else if (getPlayerOption().equals("R")) {
+                currentPlayer.setCashBalance(currentPlayer.getCashBalance()+1000);
+                System.out.println("The code [R] has been used + $1000");
+                Console.clear();
+                playerOption();
             } else if (getPlayerOption().equals("E")) {
                 endTurn = true;
                 System.out.println("Ending turn...");
@@ -216,7 +221,7 @@ public class GameMarketController {
 
     private void playerOption() {
         showGameBoard();
-        setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[BSCE]{1}",
+        setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[BSRCE]{1}",
                 "you did not enter a correct response, must choose one of the following: [B], [S], [C] or [E]."));
     }
 
