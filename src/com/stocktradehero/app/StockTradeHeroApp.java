@@ -15,15 +15,9 @@ public class StockTradeHeroApp implements SplashApp {
     public void start() {
         System.out.println();
         System.out.println("booting up...");
-        promptForName();
-        Console.pause(250);
+        Console.pause(2000);
         Console.clear();
         GameMarket market = new GameMarket();
         market.initialize();
     }
-
-    private String promptForName(){ ///might move this to the Status board...
-        return prompter.prompt("Top score, Enter initials: ", "[A-Z]{3}","you did not enter 3 letters" );
-    }
-
 }

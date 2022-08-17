@@ -78,10 +78,12 @@ public class GameMarket {
         //todo: add shuffle play card and do math on stock values
         marketForce();
         payDividends();
+        Console.pause(2000);
         for (Player roundPlayer : players
         ) {
             currentPlayer = roundPlayer;
             turn();
+            Console.pause(2000);
             Console.clear(); //ask Jay about console.clear?, idea on snake draft?
         }
     }
@@ -94,6 +96,7 @@ public class GameMarket {
                     player.setCashBalance((stock.getPrice() * stock.getStockDividend()) * stock.getShares() + player.getCashBalance());
                 }
                 System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + player.getCashBalance());
+                Console.pause(2000);
             }
         }
     }
@@ -132,6 +135,7 @@ public class GameMarket {
                 if (currentPlayer.getCashBalance() > s1.getPrice() * Integer.parseInt(getQty())) {
                     currentPlayer.buyStock(Integer.parseInt(getQty()), s1);
                     buyTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
+                    Console.pause(2000);
 //                System.out.println("old stock price " + df.format(s1.getPrice()));
 //                s1.setPrice(Math.ceil(s1.getPrice() * (1 + s1.getStockVolatility())));
 //                System.out.println("New stock price " + df.format(s1.getPrice()));
@@ -147,6 +151,7 @@ public class GameMarket {
                 if (currentPlayer.getPlayerStocks().contains(s1)) {
                     currentPlayer.sellStock(Integer.parseInt(getQty()), s1);
                     sellTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
+                    Console.pause(2000);
 //            System.out.println("old stock price " + df.format(s1.getPrice()));
 //            s1.setPrice(Math.ceil(s1.getPrice() * (1-s1.getStockVolatility())));
 //            System.out.println("New stock price " + df.format(s1.getPrice()));
@@ -186,6 +191,7 @@ public class GameMarket {
                 }
                 buyTransactions.clear();
                 sellTransactions.clear();
+                Console.pause(2000);
             }
         }
     }
