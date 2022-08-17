@@ -78,7 +78,7 @@ public class GameMarket {
         //todo: add shuffle play card and do math on stock values
         marketForce();
         payDividends();
-        System.out.println("Markets are oppening soon...");
+        System.out.println("Markets are opening soon...");
         Console.pause(2000);
         System.out.println("...");
         Console.pause(4000);
@@ -94,17 +94,18 @@ public class GameMarket {
 
     private void payDividends() {
         for (Player player : players) {
+            double oldCashBalance = player.getCashBalance();
             System.out.println(player.getName() + " -- Current cash balance: " + player.getCashBalance());
             if (player.getStockAmountBalance() >= 1) {
                 for (Stock stock : player.getPlayerStocks()) {
                     player.setCashBalance((stock.getPrice() * stock.getStockDividend()) * stock.getShares() + player.getCashBalance());
                 }
+                System.out.println(player.getName() + " -- Dividend paid out:  " + (df.format(player.getCashBalance() - oldCashBalance)));
                 System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + player.getCashBalance());
                 Console.pause(4000);
             }
         }
     }
-
     private void marketForce() {
         Collections.shuffle(cards);
         currentMarketForce = cards.get(0);
@@ -177,19 +178,19 @@ public class GameMarket {
                 ) {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
-                    System.out.println(s1.getTickerSymbol() + "old stock price " + df.format(s1.getPrice()));
+                    System.out.println(s1.getTickerSymbol() + ", old stock price " + df.format(s1.getPrice()));
                     s1.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
                     s2.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
-                    System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
+                    System.out.println(s1.getTickerSymbol() + ", new stock price " + df.format(s1.getPrice()));
                 }
                 for (Map.Entry<String, Integer> entry : sellTransactions.entrySet()
                 ) {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
-                    System.out.println(s1.getTickerSymbol() + "old stock price " + df.format(s1.getPrice()));
+                    System.out.println(s1.getTickerSymbol() + ", old stock price " + df.format(s1.getPrice()));
                     s1.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
                     s2.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
-                    System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
+                    System.out.println(s1.getTickerSymbol() + ", new stock price " + df.format(s1.getPrice()));
 
                     //currentPlayer.getStockAmountBalance();
                 }
