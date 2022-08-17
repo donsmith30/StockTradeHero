@@ -73,9 +73,15 @@ public class GameMarketController {
             System.out.println("Round: " + (i + 1));
             round();
         }
+        finalStandings();
+    }
+
+    private void finalStandings() {
+        players.sort((p1, p2) -> Double.compare(p1.getTotalAmountBalance(), p2.getTotalAmountBalance()));
+        Collections.reverse(players);
         System.out.println("---F I N A L  S C O R E S---");
         for (Player player : players) {
-            player.printBalance();
+            player.printStandings();
         }
     }
 
@@ -205,7 +211,7 @@ public class GameMarketController {
     }
 
     private void roundsPrompt() {
-        setRounds(prompter.prompt("Enter the number of rounds to play [5] or [10]: ", "[5,10]{1,2}",
+        setRounds(prompter.prompt("Enter the number of rounds to play [5] or [10]: ", "[1,5,10]{1,2}",
                 "Wrong input, please enter [5] or [10]!"));
     }
 
