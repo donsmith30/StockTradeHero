@@ -1,11 +1,7 @@
 package com.stocktradehero;
 
-import com.stocktradehero.app.StockTradeHeroApp;
-import com.stocktradehero.GameMarket;
-
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.function.Predicate;
 
 /*
  * Player

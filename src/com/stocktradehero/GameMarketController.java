@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
-public class GameMarket {
+public class GameMarketController {
     private DecimalFormat df = new DecimalFormat("$" + "#.00");
     private StockLoader stockListLoader = new StockLoader("conf/StocksList.csv");
     private List<Stock> stocks;
@@ -49,6 +49,11 @@ public class GameMarket {
 
     public void initialize() {
         //game set-up here
+        Console.blankLines(1);
+        System.out.println("---W E L C O M E  T O  S T O C K  T R A D E  H E R O !---\n" +
+                "A console based stock market simulator where you can play alone\n" +
+                "or with 3 of your coolest friends, gathered around one monitor for keyboard co-op!");
+        Console.blankLines(1);
         setPlayers();
         roundsPrompt();
         System.out.println("You choose to have a "+getPlayerCount()+" player game of "+getRounds()+" rounds, good luck!");
@@ -101,9 +106,9 @@ public class GameMarket {
                 }
                 System.out.println(player.getName() + " -- Dividend paid out:  " + (df.format(player.getCashBalance() - oldCashBalance)));
                 System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + df.format(player.getCashBalance()));
-                Console.pause(3000);
             }
         }
+        Console.pause(3000);
     }
     private void marketForce() {
         Collections.shuffle(cards);
@@ -133,14 +138,14 @@ public class GameMarket {
                 System.out.println("S T O C K  P U R C H A S E");
                 stockPrompt();
                 Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
-                System.out.println(s1.getTickerSymbol()+"("+s1.getPrice()+"/per stock)");
+                System.out.println(s1.getTickerSymbol()+"("+df.format(s1.getPrice())+"/per stock)");
                 qtyPrompt();
                 if (currentPlayer.getCashBalance() > s1.getPrice() * Integer.parseInt(getQty())) {
                     currentPlayer.buyStock(Integer.parseInt(getQty()), s1);
                     buyTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
                     Console.pause(2000);
                 } else {
-                    System.out.println("Insufficient Balance. Your current cash balance is " + currentPlayer.getCashBalance());
+                    System.out.println("Insufficient Balance. Your current cash balance is " + df.format(currentPlayer.getCashBalance()));
                 }
                 playerOption();
             } else if (getPlayerOption().equals("S")) {
@@ -154,7 +159,8 @@ public class GameMarket {
                     sellTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
                     Console.pause(2000);
                 } else {
-                    System.out.println("Player does not have stock");
+                    System.out.println("Insufficient stock shares. Your current stock share balance is " + s2.getShares() +
+                            " Please try again!");
                 }
                 playerOption();
             } else if (getPlayerOption().equals("C")) {
@@ -204,8 +210,8 @@ public class GameMarket {
     }
 
     private void qtyPrompt() {
-        setQty(prompter.prompt("You have $" + currentPlayer.getCashBalance() + ", Enter the amount of shares: ", "[0-9]{1,2}",
-                "please enter a valid number"));
+        setQty(prompter.prompt("You have $" + currentPlayer.getCashBalance() + ", Enter the amount of shares[0-99]: ", "[0-9]{1,2}",
+                "please enter a valid number[0-99]"));
     }
 
     private void playerOption() {
@@ -215,7 +221,8 @@ public class GameMarket {
     }
 
     private void showGameBoard() { //todo: move these lines for board, replace with a board.show() method
-        Console.blankLines(1);
+        Console.pause(2000);
+        Console.clear();
         System.out.println("---C U R R E N T  P R I C E S---  \nMarket Event: " +currentMarketForce.getCardText());
         for (Stock item : stocks) {
             System.out.println("Company: " + item.getCompanyName()+ ", stock volatility: " + item.getStockVolatility() + ", ROI: "+ item.getStockDividend() + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
@@ -269,7 +276,7 @@ public class GameMarket {
 
     //main test
     public static void main(String[] args) {
-        GameMarket game = new GameMarket();
+        GameMarketController game = new GameMarketController();
         game.initialize();
     }
 }

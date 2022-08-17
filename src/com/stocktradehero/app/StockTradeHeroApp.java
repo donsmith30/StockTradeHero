@@ -3,7 +3,7 @@ package com.stocktradehero.app;
 import com.apps.util.Console;
 import com.apps.util.Prompter;
 import com.apps.util.SplashApp;
-import com.stocktradehero.GameMarket;
+import com.stocktradehero.GameMarketController;
 
 import java.util.Scanner;
 
@@ -17,7 +17,7 @@ public class StockTradeHeroApp implements SplashApp {
         System.out.println("booting up...");
         Console.pause(2000);
         Console.clear();
-        GameMarket market = new GameMarket();
+        GameMarketController market = new GameMarketController();
         market.initialize();
     }
 }
