@@ -78,12 +78,16 @@ public class GameMarket {
         //todo: add shuffle play card and do math on stock values
         marketForce();
         payDividends();
+        System.out.println("Markets are oppening soon...");
         Console.pause(2000);
+        System.out.println("...");
+        Console.pause(4000);
+        Console.clear();
         for (Player roundPlayer : players
         ) {
             currentPlayer = roundPlayer;
             turn();
-            Console.pause(2000);
+            Console.pause(4000);
             Console.clear(); //ask Jay about console.clear?, idea on snake draft?
         }
     }
@@ -96,7 +100,7 @@ public class GameMarket {
                     player.setCashBalance((stock.getPrice() * stock.getStockDividend()) * stock.getShares() + player.getCashBalance());
                 }
                 System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + player.getCashBalance());
-                Console.pause(2000);
+                Console.pause(4000);
             }
         }
     }
@@ -118,6 +122,7 @@ public class GameMarket {
                 item.setPrice(Math.ceil(item.getPrice() * currentMarketForce.getxIndustrial()));
             }
         }
+        Console.pause(3000);
     }
 
     //add blank lines "Console.blanklines(2)"
@@ -148,7 +153,8 @@ public class GameMarket {
                 stockPrompt();
                 qtyPrompt();
                 Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
-                if (currentPlayer.getPlayerStocks().contains(s1)) {
+                Stock s2 = (currentPlayer.getPlayerStocks().stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
+                if (Integer.parseInt(getQty()) <= s2.getShares()) {
                     currentPlayer.sellStock(Integer.parseInt(getQty()), s1);
                     sellTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
                     Console.pause(2000);
@@ -215,19 +221,22 @@ public class GameMarket {
     }
 
     private void playerOption() {
-        Console.blankLines(2);//todo: use these lines for board, replace with a board.show() method
-        System.out.println("C U R R E N T  P R I C E S");
-        for (Stock item : stocks) {
-            System.out.println("Company: " + item.getCompanyName() + ", Stock Ticker: " + item.getTickerSymbol() + ", Stock Price: " + df.format(item.getPrice()));
-        }
-        Console.blankLines(1);
-        System.out.println("P l A Y E R  I N F O");
-        currentPlayer.printBalance();
-        Console.blankLines(1);//todo: board update to here
+        showGameBoard();
         setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[BSCE]{1}",
                 "you did not enter a correct response, must choose one of the following: [B], [S], [C] or [E]."));
     }
 
+    private void showGameBoard() { //todo: move these lines for board, replace with a board.show() method
+        Console.blankLines(1);
+        System.out.println("C U R R E N T  P R I C E S");
+        for (Stock item : stocks) {
+            System.out.println("Company: " + item.getCompanyName()+ ", stock volatility: " + item.getStockVolatility()  + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
+        }
+        Console.blankLines(1);
+        System.out.println("P l A Y E R  I N F O");
+        currentPlayer.printBalance();
+        Console.blankLines(1);
+    }
     //get & set
 
 
