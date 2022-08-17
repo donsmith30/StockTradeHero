@@ -11,14 +11,12 @@ public class StockLoaderTest {
 
     @Test
     public void load_shouldReturnStocksList() throws IOException{
-        StockLoader statusBoardLoader = new StockLoader("conf/StocksList.csv");
-        List<Stock> stocks = statusBoardLoader.load();
-//        assertEquals(20, stocks.size());
+        StockLoader stockListLoader = new StockLoader("conf/StocksList.csv");
+        List<Stock> stocks = stockListLoader.load();
+        assertEquals(8, stocks.size());
 
-        Stock stock0 = stocks.get(19);
-        assertEquals("Manure R Us", stock0.getCompanyName());
-//        assertEquals("GRPF", stock0.getTickerSymbol());
-//        assertEquals(java.util.Optional.ofNullable(Double.valueOf(150.00)), stock0.getPrice());
-//        assertEquals(StockType.AGRICULTURE, stock0.getStockType());
+        Stock stock0 = stocks.get(0);
+        assertEquals("GRPF", stock0.getTickerSymbol());
+        assertEquals(StockType.TECH, stock0.getStockType());
     }
 }
