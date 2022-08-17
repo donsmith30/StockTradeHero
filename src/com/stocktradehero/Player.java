@@ -126,11 +126,17 @@ public class Player {
     }
 
     public double getStockAmountBalance() {
-        return stockAmountBalance;  //TODO
+        double result = 0.0;
+        for (Stock stock: playerStocks){
+            result = result + (stock.getPrice()*stock.getShares());
+        }
+        return result;  //TODO
     }
 
     public double getTotalAmountBalance() {
-        return totalAmountBalance;
+        double result = 0.0;
+        result=getStockAmountBalance()+getCashBalance();
+        return result;
     }
 
 
