@@ -29,7 +29,7 @@ public class Player {
     //private double stockBalance = 0.0;
     //private double totalBalance =1000.0;
     private int stockShareBalance;  //delete after recode sell method
-    private double stockAmountBalance = 0.0;
+    private double stockAmountBalance;
     private double totalAmountBalance;
     //private final Map<Stock, Double> StockMap = new HashMap<>();
     //double sum = StockMap.values().stream().mapToDouble(d -> d).sum();

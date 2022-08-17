@@ -75,8 +75,8 @@ public class GameMarket {
 
     private void round() { //thinking the order of play will be here
         //todo: add shuffle play card and do math on stock values
-        //add dividends
         marketForce();
+        payDividends();
         for (Player roundPlayer : players
         ) {
             currentPlayer = roundPlayer;
@@ -87,11 +87,12 @@ public class GameMarket {
 
     private void payDividends() {
         for (Player player : players) {
+            System.out.println(player.getName() + " -- Current cash balance: " + player.getCashBalance());
             if (player.getStockShareBalance() >= 1) {
                 for (Stock stock : player.getPlayerStocks()) {
-                    player.setCashBalance((stock.getShares() * stock.getStockDividend()) + player.getCashBalance());
+                    player.setCashBalance((stock.getPrice() * stock.getStockDividend()) * stock.getShares() + player.getCashBalance());
                 }
-                System.out.println("Dividend has been paid out: " + player.getCashBalance());
+                System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + player.getCashBalance());
             }
         }
 

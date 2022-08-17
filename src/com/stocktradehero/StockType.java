@@ -7,7 +7,7 @@ package com.stocktradehero;
  * double investmentReturn
  */
 
-enum StockType {
+public enum StockType {
 
     TECH (0.5, 0.03),
     INDUSTRIAL(0.3, 0.025),
