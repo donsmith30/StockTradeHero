@@ -87,12 +87,14 @@ public class GameMarket {
 
     private void payDividends() {
         for (Player player : players) {
+            double oldCashBalance = player.getCashBalance();
             System.out.println(player.getName() + " -- Current cash balance: " + player.getCashBalance());
             if (player.getStockShareBalance() >= 1) {
                 for (Stock stock : player.getPlayerStocks()) {
                     player.setCashBalance((stock.getPrice() * stock.getStockDividend()) * stock.getShares() + player.getCashBalance());
                 }
-                System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + player.getCashBalance());
+                System.out.println(player.getName() + " -- Dividend paid out:  " + (df.format(player.getCashBalance() - oldCashBalance)));
+                System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + df.format(player.getCashBalance()));
             }
         }
 
@@ -167,8 +169,8 @@ public class GameMarket {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     System.out.println(s1.getTickerSymbol() + "old stock price " + df.format(s1.getPrice()));
-                    s1.setPrice(Math.ceil(s1.getPrice() * (1 + ((entry.getValue() * .1) / 3)) * (1 + s1.getStockVolatility())));
-                    s2.setPrice(Math.ceil(s1.getPrice() * (1 + ((entry.getValue() * .1) / 3)) * (1 + s1.getStockVolatility())));
+                    s1.setPrice(Math.ceil(s1.getPrice() * (1 + ((entry.getValue() * .01) / 3)) * (1 + s1.getStockVolatility())));
+                    s2.setPrice(Math.ceil(s1.getPrice() * (1 + ((entry.getValue() * .01) / 3)) * (1 + s1.getStockVolatility())));
                     System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
 
                     //currentPlayer.getStockAmountBalance();
@@ -178,8 +180,8 @@ public class GameMarket {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     System.out.println(s1.getTickerSymbol() + "old stock price " + df.format(s1.getPrice()));
-                    s1.setPrice(Math.ceil(s1.getPrice() * (1 - ((entry.getValue() * .1) / 3)) * (1 - s1.getStockVolatility())));
-                    s2.setPrice(Math.ceil(s1.getPrice() * (1 - ((entry.getValue() * .1) / 3)) * (1 - s1.getStockVolatility())));
+                    s1.setPrice(Math.ceil(s1.getPrice() * (1 - ((entry.getValue() * .01) / 3)) * (1 - s1.getStockVolatility())));
+                    s2.setPrice(Math.ceil(s1.getPrice() * (1 - ((entry.getValue() * .01) / 3)) * (1 - s1.getStockVolatility())));
                     System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
 
                     //currentPlayer.getStockAmountBalance();
