@@ -117,6 +117,10 @@ public class Player {
         return cashBalance;
     }
 
+    public void setCashBalance(double cashBalance) {
+        this.cashBalance = cashBalance;
+    }
+
     public int getStockShareBalance() { //delete after recode sell method to include getPlayerStocks
         return stockShareBalance;
     }

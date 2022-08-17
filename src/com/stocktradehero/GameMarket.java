@@ -86,10 +86,15 @@ public class GameMarket {
     }
 
     private void payDividends() {
-        for (Player player : players
-        ) {
-            // player.getStock
+        for (Player player : players) {
+            if (player.getStockShareBalance() >= 1) {
+                for (Stock stock : player.getPlayerStocks()) {
+                    player.setCashBalance((stock.getShares() * stock.getStockDividend()) + player.getCashBalance());
+                }
+                System.out.println("Dividend has been paid out: " + player.getCashBalance());
+            }
         }
+
     }
 
     private void marketForce() {
