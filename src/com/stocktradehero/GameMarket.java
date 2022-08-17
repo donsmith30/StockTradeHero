@@ -132,8 +132,9 @@ public class GameMarket {
             if (getPlayerOption().equals("B")) {
                 System.out.println("S T O C K  P U R C H A S E");
                 stockPrompt();
-                qtyPrompt();
                 Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
+                System.out.println(s1.getTickerSymbol()+"("+s1.getPrice()+"/per stock)");
+                qtyPrompt();
                 if (currentPlayer.getCashBalance() > s1.getPrice() * Integer.parseInt(getQty())) {
                     currentPlayer.buyStock(Integer.parseInt(getQty()), s1);
                     buyTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
