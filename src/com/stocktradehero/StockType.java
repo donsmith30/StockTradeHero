@@ -9,10 +9,10 @@ package com.stocktradehero;
 
 public enum StockType {
 
-    TECH (0.5, 0.03),
-    INDUSTRIAL(0.3, 0.025),
-    AGRICULTURE(0.2, 0.02),
-    PRECIOUS_METALS(0.1, 0.01);
+    TECH (0.5, 0.3),
+    INDUSTRIAL(0.3, 0.25),
+    AGRICULTURE(0.2, 0.2),
+    PRECIOUS_METALS(0.1, 0.1);
 
     private final double volatility;
     private final double stockDividend;
