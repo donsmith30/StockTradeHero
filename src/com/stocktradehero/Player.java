@@ -43,6 +43,7 @@ public class Player {
             stockName.setShares(qty);
             playerStocks.add(stockName);
             cashBalance -= qty * stockName.getPrice();
+            System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
         }
     }
 
