@@ -14,7 +14,6 @@ import java.util.function.Predicate;
  * double cashBalance
  * double stockBalance
  * double totalBalance
- * Map<Stocks> stocks
  * behaviors:
  * buyStock()
  * sellStock()
@@ -39,8 +38,19 @@ public class Player {
     public void buyStock(int qty, Stock stockName) {
         if (stockName.getPrice() * qty > getCashBalance()) {
             System.out.println("Insufficient Balance. Your current cash balance is:  " + df.format(getCashBalance()));
-        } else {
+        }
+        else if (!playerStocks.contains(stockName)){
+            playerStocks.add(stockName);
             stockName.setShares(qty);
+            cashBalance -= qty * stockName.getPrice();
+            System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
+        }
+        else{
+
+            Stock s1 = getPlayerStocks().stream().filter(stock -> stockName.equals(stock.getTickerSymbol())).findFirst().orElse(getPlayerStocks().get(0));
+            int newShares = s1.getShares()+qty;
+            playerStocks.remove(s1);
+            stockName.setShares(newShares);
             playerStocks.add(stockName);
             cashBalance -= qty * stockName.getPrice();
             System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
