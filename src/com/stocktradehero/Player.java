@@ -1,5 +1,6 @@
 package com.stocktradehero;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -16,7 +17,7 @@ import java.util.*;
  * printBalance()
  */
 
-public class Player {
+public class Player implements Serializable {
 
     //attributes
     private String name;

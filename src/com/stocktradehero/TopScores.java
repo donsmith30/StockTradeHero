@@ -7,39 +7,30 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-class TopScores {
+class TopScores implements Serializable{
     //private Map<String, Double> topTenMap = new HashMap<>();
     private List<Player> toptenwinners = new ArrayList<>();
-    Prompter prompter = new Prompter(new Scanner(System.in));
-    private String winnerNames;
 
-    private static final String dataFilePath = "data/board.dat";
 
-    private void namesPrompt() {
-        setWinnerNames(prompter.prompt("Enter the 3 letters of initial of the winner: ", "[A-Z]{3}",
-                "please enter a valid name for the winner."));
-    }
+    private static final String dataFilePath = "data/top10.dat";
 
     //ctor
-    public TopScores() {
-
+    private TopScores() {
     }
 
     public void update(Player winner) {
         System.out.println(winner.getName());
-        namesPrompt();
-        winner.setName(getWinnerNames());
 
         if (toptenwinners.size() < 10) {
             toptenwinners.add(winner);
 
         } else if (toptenwinners.get(9).getTotalAmountBalance() < winner.getTotalAmountBalance()) {
             System.out.println(winner.getName());
-            namesPrompt();
-            winner.setName(getWinnerNames());
-
             toptenwinners.remove(9);
             toptenwinners.add(winner);
+        }
+        else {
+
         }
         save();
     }
@@ -52,18 +43,14 @@ class TopScores {
         }
     }
 
-
     public void show() {
-        Collection<Player> winners = new ArrayList<>();
         System.out.println("T O P    W I N N E R S");
-
         for (Player winner : toptenwinners) {
             System.out.println(winner.getName()+ "'s total amount balance is:  " + winner.getTotalAmountBalance());
         }
     }
 
-
-    public static TopScores getInstance() {
+    static TopScores getInstance() {
         // declare return value
         TopScores topScores = null;
         if (Files.exists(Path.of(dataFilePath))) {
@@ -80,11 +67,4 @@ class TopScores {
     }
 
 
-    public String getWinnerNames() {
-        return winnerNames;
-    }
-
-    public void setWinnerNames(String winnerNames) {
-        this.winnerNames = winnerNames;
-    }
 }

@@ -46,7 +46,8 @@ public class GameMarketController {
     private boolean gameOver = false;
     private boolean endTurn = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
-    private final TopScores topScores= TopScores.getInstance();
+    TopScores topScores = TopScores.getInstance();
+    private String winnerNames;
 
     public void initialize() {
         //game set-up here
@@ -76,9 +77,11 @@ public class GameMarketController {
         }
         finalStandings();
         for (Player player : players) {
-        topScores.update(player);}
+            namesPrompt();
+            player.setName(getWinnerNames());
+            topScores.update(player);
         topScores.show();
-
+    }
     }
 
     private void finalStandings() {
@@ -209,6 +212,10 @@ public class GameMarketController {
             }
         }
     }
+    private void namesPrompt() {
+        setWinnerNames(prompter.prompt("Enter the 3 letters of initial of the winner: ", "[A-Z]{3}",
+                "please enter a valid name for the winner."));
+    }
 
     private void playersPrompt() {
         setPlayerCount(prompter.prompt("Enter the number of players (1-4): ", "[1-4]{1}",
@@ -290,6 +297,14 @@ public class GameMarketController {
 
     public void setPlayerOption(String playerOption) {
         this.playerOption = playerOption;
+    }
+
+    public String getWinnerNames() {
+        return winnerNames;
+    }
+
+    public void setWinnerNames(String winnerNames) {
+        this.winnerNames = winnerNames;
     }
 
     //main test
