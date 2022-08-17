@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class StatusBoard {
+public class StockLoader {
 
     private double playerNetWorth;
 //    private double stockPrice = getPrice();
@@ -30,7 +30,7 @@ public class StatusBoard {
     private final static String COMMA_DELIMITER = ",";
     private final Path dataFilepath;
 
-    public StatusBoard(String dataFilePath) {
+    public StockLoader(String dataFilePath) {
         this.dataFilepath = Path.of(dataFilePath);
     }
 

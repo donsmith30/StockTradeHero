@@ -7,11 +7,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class StatusBoardTest {
+public class StockLoaderTest {
 
     @Test
     public void load_shouldReturnStocksList() throws IOException{
-        StatusBoard statusBoardLoader = new StatusBoard("conf/StocksList.csv");
+        StockLoader statusBoardLoader = new StockLoader("conf/StocksList.csv");
         List<Stock> stocks = statusBoardLoader.load();
 //        assertEquals(20, stocks.size());
 

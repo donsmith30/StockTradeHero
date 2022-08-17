@@ -19,15 +19,13 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.*;
 
-import com.stocktradehero.Stock;
-
 public class GameMarket {
     private DecimalFormat df = new DecimalFormat("$" + "#.00");
-    private StatusBoard statusBoardLoader = new StatusBoard("conf/StocksList.csv");
+    private StockLoader stockListLoader = new StockLoader("conf/StocksList.csv");
     private List<Stock> stocks;
     {
         try {
-            stocks = statusBoardLoader.load();
+            stocks = stockListLoader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
