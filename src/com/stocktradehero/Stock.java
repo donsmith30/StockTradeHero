@@ -1,6 +1,7 @@
 package com.stocktradehero;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 /*
@@ -11,7 +12,7 @@ import java.util.List;
  * Enum   StockType
  * double price
  */
-public class Stock {
+public class Stock implements Serializable {
 
     // Fields, or attributes, of a stock
     private String companyName;
