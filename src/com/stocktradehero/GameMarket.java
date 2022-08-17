@@ -198,7 +198,7 @@ public class GameMarket {
         Console.blankLines(2);//todo: use these lines for board, replace with a board.show() method
         System.out.println("C U R R E N T  P R I C E S");
         for (Stock item : stocks) {
-            System.out.println("Stock Ticker: " + item.getTickerSymbol() + ", Stock Price: " + df.format(item.getPrice()));
+            System.out.println("Company: "+item.getCompanyName()+", Stock Ticker: " + item.getTickerSymbol() + ", Stock Price: " + df.format(item.getPrice()));
         }
         Console.blankLines(1);
         System.out.println("P l A Y E R  I N F O");
