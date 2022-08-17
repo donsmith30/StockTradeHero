@@ -132,9 +132,6 @@ public class GameMarket {
                 if (currentPlayer.getCashBalance() > s1.getPrice() * Integer.parseInt(getQty())) {
                     currentPlayer.buyStock(Integer.parseInt(getQty()), s1);
                     buyTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
-//                System.out.println("old stock price " + df.format(s1.getPrice()));
-//                s1.setPrice(Math.ceil(s1.getPrice() * (1 + s1.getStockVolatility())));
-//                System.out.println("New stock price " + df.format(s1.getPrice()));
                 } else {
                     System.out.println("Insufficient Balance. Your current cash balance is " + currentPlayer.getCashBalance());
                 }
@@ -147,9 +144,6 @@ public class GameMarket {
                 if (currentPlayer.getPlayerStocks().contains(s1)) {
                     currentPlayer.sellStock(Integer.parseInt(getQty()), s1);
                     sellTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
-//            System.out.println("old stock price " + df.format(s1.getPrice()));
-//            s1.setPrice(Math.ceil(s1.getPrice() * (1-s1.getStockVolatility())));
-//            System.out.println("New stock price " + df.format(s1.getPrice()));
                 } else {
                     System.out.println("Player does not have stock");
                 }
@@ -170,8 +164,6 @@ public class GameMarket {
                     s1.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
                     s2.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
                     System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
-
-                    //currentPlayer.getStockAmountBalance();
                 }
                 for (Map.Entry<String, Integer> entry : sellTransactions.entrySet()
                 ) {

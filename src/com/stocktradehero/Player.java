@@ -43,7 +43,6 @@ public class Player {
             stockName.setShares(qty);
             playerStocks.add(stockName);
             cashBalance -= qty * stockName.getPrice();
-            stockName.setPrice(Math.ceil(stockName.getPrice() * (1 + stockName.getStockVolatility())));
         }
     }
 
@@ -51,7 +50,6 @@ public class Player {
         if (qty <= stockName.getShares()) {
             stockName.setShares(stockName.getShares() - qty);
             cashBalance += qty * stockName.getPrice();
-            stockName.setPrice(Math.ceil(stockName.getPrice() * (1 - stockName.getStockVolatility())));
             System.out.println(getName() + " just sold " + qty + " shares of " + stockName.getTickerSymbol());
         } else {
             System.out.println("Insufficient stock shares. Your current stock share balance is " + stockName.getShares() +
