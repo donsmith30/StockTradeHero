@@ -92,6 +92,10 @@ public class Player {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getCashBalance() {
         return cashBalance;
     }
@@ -116,5 +120,8 @@ public class Player {
         double result = 0.0;
         result = getStockAmountBalance() + getCashBalance();
         return result;
+    }
+
+    public void setName() {
     }
 }

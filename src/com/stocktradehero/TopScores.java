@@ -1,43 +1,47 @@
 package com.stocktradehero;
 
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
+import com.apps.util.Prompter;
+
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
 class TopScores {
-    private Map<String, Double> topTenMap = loadTopTenMap(){
+    //private Map<String, Double> topTenMap = new HashMap<>();
+    private List<Player> toptenwinners = new ArrayList<>();
+    Prompter prompter = new Prompter(new Scanner(System.in));
+    private String winnerNames;
 
-    };
     private static final String dataFilePath = "data/board.dat";
 
+    private void namesPrompt() {
+        setWinnerNames(prompter.prompt("Enter the 3 letters of initial of the winner: ", "[A-Z]{3}",
+                "please enter a valid name for the winner."));
+    }
 
-
-
-    private void update() {
-        public void update(int id, Reward reward) {
-            DuckRacer racer = null;
-            if (racerMap.containsKey(id)) { //in map so get it and make it win
-                racer = racerMap.get(id);
-            } else { //not in map, so put in map, then make it win
-                racer = new DuckRacer(id, studentIdMap.get(id));
-                racerMap.put(id, racer);
-            }
-            //we call win in all cases, so only say it once
-            racer.win(reward);
-            save();
-        }
+    //ctor
+    public TopScores() {
 
     }
 
+    public void update(Player winner) {
+        System.out.println(winner.getName());
+        namesPrompt();
+        winner.setName(getWinnerNames());
 
-    public void show() {
-        Collection<Player> winners = new ArrayList<>();
-        for (Player winner: winners) {
-            System.out.println(winner);
+        if (toptenwinners.size() < 10) {
+            toptenwinners.add(winner);
+
+        } else if (toptenwinners.get(9).getTotalAmountBalance() < winner.getTotalAmountBalance()) {
+            System.out.println(winner.getName());
+            namesPrompt();
+            winner.setName(getWinnerNames());
+
+            toptenwinners.remove(9);
+            toptenwinners.add(winner);
         }
-
+        save();
     }
 
     private void save() {
@@ -48,22 +52,39 @@ class TopScores {
         }
     }
 
-    public static Board getInstance() {
-        // declare return value
-        Board board = null;
-        if (Files.exists(Path.of(dataFilePath))){
-            // de-serialize the binary file board.dat back into the board object
-            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
-                board = (Board) in.readObject();
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+
+    public void show() {
+        Collection<Player> winners = new ArrayList<>();
+        System.out.println("T O P    W I N N E R S");
+
+        for (Player winner : toptenwinners) {
+            System.out.println(winner.getName()+ "'s total amount balance is:  " + winner.getTotalAmountBalance());
         }
-        else {
-            board = new Board();
-        }
-        return board;
     }
 
+
+    public static TopScores getInstance() {
+        // declare return value
+        TopScores topScores = null;
+        if (Files.exists(Path.of(dataFilePath))) {
+            // de-serialize the binary file board.dat back into the board object
+            try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
+                topScores = (TopScores) in.readObject();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            topScores = new TopScores();
+        }
+        return topScores;
+    }
+
+
+    public String getWinnerNames() {
+        return winnerNames;
+    }
+
+    public void setWinnerNames(String winnerNames) {
+        this.winnerNames = winnerNames;
+    }
 }
