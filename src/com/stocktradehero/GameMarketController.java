@@ -46,6 +46,7 @@ public class GameMarketController {
     private boolean gameOver = false;
     private boolean endTurn = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
+    private final TopScores topScores= TopScores.getInstance();
 
     public void initialize() {
         //game set-up here
@@ -74,6 +75,10 @@ public class GameMarketController {
             round();
         }
         finalStandings();
+        for (Player player : players) {
+        topScores.update(player);}
+        topScores.show();
+
     }
 
     private void finalStandings() {
