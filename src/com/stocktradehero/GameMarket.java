@@ -30,6 +30,7 @@ public class GameMarket {
 //            new Stock("Stock4","FOUR", 50.00, StockType.AGRICULTURE)));
     StatusBoard statusBoardLoader = new StatusBoard("conf/StocksList.csv");
     private List<Stock> stocks;
+
     {
         try {
             stocks = statusBoardLoader.load();
@@ -39,10 +40,10 @@ public class GameMarket {
     }
 
 
-    private List<Player> players = new ArrayList<>(List.of(
-            new Player("Player 1"),
-            new Player("Player 2"),
-            new Player("Player 3")));
+    private List<Player> players = new ArrayList<>();//(List.of(
+//            new Player("Player 1"),
+//            new Player("Player 2"),
+//            new Player("Player 3")));
 
     private List<MarketEvent> cards = new ArrayList<>(List.of(MarketEvent.values()));
     private Map<String, Integer> buyTransactions = new HashMap<>();
@@ -51,7 +52,8 @@ public class GameMarket {
     private String playerOption;
     private String qty;
     private String stockName;
-    private int rounds = 5;
+    private String rounds = "5";
+    private String playerCount = "3";
     private int currentRound;
     private Player currentPlayer;
     private boolean gameOver = false;
@@ -60,11 +62,21 @@ public class GameMarket {
 
     public void initialize() {
         //game set-up here
+        setPlayers();
         playGame();
     }
 
+    private void setPlayers() {
+        playersPrompt();
+        for (int i = 0; i < Integer.parseInt(getPlayerCount()); i++) {
+            players.add(new Player("Player" + (i + 1)));
+        }
+
+    }
+
     private void playGame() { //This will be a condition for the entire game, takes turns and runs a for each loop to create a round...
-        for (int i = 0; i < rounds; i++) {
+        roundsPrompt();
+        for (int i = 0; i < Integer.parseInt(getRounds()); i++) {
             System.out.println("Round: " + (i + 1));
             round();
         }
@@ -88,14 +100,13 @@ public class GameMarket {
     private void payDividends() {
         for (Player player : players) {
             System.out.println(player.getName() + " -- Current cash balance: " + player.getCashBalance());
-            if (player.getStockShareBalance() >= 1) {
+            if (player.getStockAmountBalance() >= 1) {
                 for (Stock stock : player.getPlayerStocks()) {
                     player.setCashBalance((stock.getPrice() * stock.getStockDividend()) * stock.getShares() + player.getCashBalance());
                 }
                 System.out.println(player.getName() + " -- Cash balance after dividend has been paid out: " + player.getCashBalance());
             }
         }
-
     }
 
     private void marketForce() {
@@ -167,8 +178,8 @@ public class GameMarket {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     System.out.println(s1.getTickerSymbol() + "old stock price " + df.format(s1.getPrice()));
-                    s1.setPrice(Math.ceil(s1.getPrice() * (1 + ((entry.getValue() * .1) / 3)) * (1 + s1.getStockVolatility())));
-                    s2.setPrice(Math.ceil(s1.getPrice() * (1 + ((entry.getValue() * .1) / 3)) * (1 + s1.getStockVolatility())));
+                    s1.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
+                    s2.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 + s1.getStockVolatility()))));
                     System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
 
                     //currentPlayer.getStockAmountBalance();
@@ -178,8 +189,8 @@ public class GameMarket {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     System.out.println(s1.getTickerSymbol() + "old stock price " + df.format(s1.getPrice()));
-                    s1.setPrice(Math.ceil(s1.getPrice() * (1 - ((entry.getValue() * .1) / 3)) * (1 - s1.getStockVolatility())));
-                    s2.setPrice(Math.ceil(s1.getPrice() * (1 - ((entry.getValue() * .1) / 3)) * (1 - s1.getStockVolatility())));
+                    s1.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
+                    s2.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
                     System.out.println(s1.getTickerSymbol() + "New stock price " + df.format(s1.getPrice()));
 
                     //currentPlayer.getStockAmountBalance();
@@ -188,6 +199,16 @@ public class GameMarket {
                 sellTransactions.clear();
             }
         }
+    }
+
+    private void playersPrompt() {
+        setPlayerCount(prompter.prompt("Enter the number of players (1-4): ", "[1-4]{1}",
+                "please enter a valid set of players"));
+    }
+
+    private void roundsPrompt() {
+        setRounds(prompter.prompt("Enter the number of rounds to play [5] or [10]: ", "[5,10]{1,2}",
+                "Wrong input, please enter [5] or [10]!"));
     }
 
     private void stockPrompt() {
@@ -204,17 +225,34 @@ public class GameMarket {
         Console.blankLines(2);//todo: use these lines for board, replace with a board.show() method
         System.out.println("C U R R E N T  P R I C E S");
         for (Stock item : stocks) {
-            System.out.println("Company: "+item.getCompanyName()+", Stock Ticker: " + item.getTickerSymbol() + ", Stock Price: " + df.format(item.getPrice()));
+            System.out.println("Company: " + item.getCompanyName() + ", Stock Ticker: " + item.getTickerSymbol() + ", Stock Price: " + df.format(item.getPrice()));
         }
         Console.blankLines(1);
         System.out.println("P l A Y E R  I N F O");
         currentPlayer.printBalance();
         Console.blankLines(1);//todo: board update to here
-        setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[A-Z]{1}",
+        setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[BSCE]{1}",
                 "you did not enter a correct response, must choose one of the following: [B], [S], [C] or [E]."));
     }
 
     //get & set
+
+
+    public String getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(String rounds) {
+        this.rounds = rounds;
+    }
+
+    public String getPlayerCount() {
+        return playerCount;
+    }
+
+    public void setPlayerCount(String playerCount) {
+        this.playerCount = playerCount;
+    }
 
     public String getQty() {
         return qty;
@@ -244,6 +282,6 @@ public class GameMarket {
 
     public static void main(String[] args) {
         GameMarket game = new GameMarket();
-        game.playGame();
+        game.initialize();
     }
 }
