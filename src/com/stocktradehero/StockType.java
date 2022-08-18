@@ -1,13 +1,5 @@
 package com.stocktradehero;
 
-/*
- *
- * StockType
- * attributes:
- * double volatility - stock price will go up, or down, a certain amount with buying and selling, depending on stock type
- * double stockDividend - each stock type will have a dividend return in each round that incentivizes players to buy and hold
- *
- */
 
 public enum StockType {
 
@@ -16,15 +8,16 @@ public enum StockType {
     AGRICULTURE(0.2, 0.2),
     PRECIOUS_METALS(0.1, 0.1);
 
+    //fields
     private final double volatility;
     private final double stockDividend;
 
-
+    //ctor
     StockType(double volatility, double stockDividend) {
         this.volatility = volatility;
         this.stockDividend = stockDividend;
     }
-
+    //getters & setters
     public double getVolatility() {
         return volatility;
     }

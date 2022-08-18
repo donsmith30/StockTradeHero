@@ -8,6 +8,8 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 public class GameMarketController {
+
+    //private fields
     private DecimalFormat df = new DecimalFormat("$" + "#.00");
     private StockLoader stockListLoader = new StockLoader("conf/StocksList.csv");
     private List<Stock> stocks;
@@ -36,6 +38,7 @@ public class GameMarketController {
     TopScores topScores = TopScores.getInstance();
     private String winnerNames;
 
+    //methods
     public void initialize() {
         //game set-up here
         Console.blankLines(1);
@@ -49,7 +52,7 @@ public class GameMarketController {
         playGame();
     }
 
-    private void setPlayers() {
+    private void setPlayers() { //allows 1-4 players depending on prompts
         playersPrompt();
         for (int i = 0; i < Integer.parseInt(getPlayerCount()); i++) {
             players.add(new Player("Player" + (i + 1)));
@@ -63,7 +66,7 @@ public class GameMarketController {
             round();
         }
         finalStandings();
-        for (Player player : players) {
+        for (Player player : players) { //works with TopScores to set top 10 Score Board
             topScores.topTenWinners.sort((p1, p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
             Collections.reverse(topScores.topTenWinners);
             if (topScores.topTenWinners.size() < 10) {
@@ -88,7 +91,7 @@ public class GameMarketController {
     }
 
 
-    private void finalStandings() {
+    private void finalStandings() { //this is game standings (not all time)
         players.sort((p1, p2) -> Double.compare(p1.getTotalAmountBalance(), p2.getTotalAmountBalance()));
         Collections.reverse(players);
         System.out.println("---F I N A L  S C O R E S---");
@@ -97,7 +100,7 @@ public class GameMarketController {
         }
     }
 
-    private void round() {
+    private void round() { //defines how the rounds are played
         marketForce();
         payDividends();
         System.out.println("Markets are opening soon...");
@@ -113,7 +116,7 @@ public class GameMarketController {
         }
     }
 
-    private void payDividends() {
+    private void payDividends() { //dividends are paid on owned stocks for each round
         for (Player player : players) {
             double oldCashBalance = player.getCashBalance();
             System.out.println(player.getName() + " -- Current cash balance: " + df.format(player.getCashBalance()));
@@ -127,7 +130,7 @@ public class GameMarketController {
         }
         Console.pause(3000);
     }
-    private void marketForce() {
+    private void marketForce() { //simulates a deck in a board game, shuffles and draws one "card" per round
         Collections.shuffle(cards);
         currentMarketForce = cards.get(0);
         System.out.println(currentMarketForce.toString() + "! " + currentMarketForce.getCardText());
@@ -147,7 +150,7 @@ public class GameMarketController {
         Console.pause(1000);
     }
 
-    private void turn() {
+    private void turn() { //defines the turn protocol, uses prompt to drive turn actions
         boolean endTurn = false;
         playerOption();
         while (!endTurn) {
@@ -213,6 +216,20 @@ public class GameMarketController {
         }
     }
 
+    private void showGameBoard() { //game board shows critical info during each turn
+        Console.pause(2000);
+        Console.clear();
+        System.out.println("---C U R R E N T  P R I C E S---  \nMarket Event: " +currentMarketForce.getCardText());
+        for (Stock item : stocks) {
+            System.out.println("Company: " + item.getCompanyName()+", Stock type: " + item.getStockType()+ ", stock volatility: " + item.getStockVolatility() + ", Dividends: "+ item.getStockDividend() + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
+        }
+        Console.blankLines(1);
+        System.out.println("---P l A Y E R  I N F O---");
+        currentPlayer.printBalance();
+        Console.blankLines(1);
+    }
+
+    //prompts for various methods
     private void namesPrompt() {
         setWinnerNames(prompter.prompt("High Score! Enter the 3 letters of initials for player's name: ", "[A-Z]{3}",
                 "please enter valid 3 letters for the winner."));
@@ -244,20 +261,7 @@ public class GameMarketController {
                 "you did not enter a correct response, must choose one of the following: [B], [S] or [E]."));
     }
 
-    private void showGameBoard() {
-        Console.pause(2000);
-        Console.clear();
-        System.out.println("---C U R R E N T  P R I C E S---  \nMarket Event: " +currentMarketForce.getCardText());
-        for (Stock item : stocks) {
-            System.out.println("Company: " + item.getCompanyName()+", Stock type: " + item.getStockType()+ ", stock volatility: " + item.getStockVolatility() + ", Dividends: "+ item.getStockDividend() + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
-        }
-        Console.blankLines(1);
-        System.out.println("---P l A Y E R  I N F O---");
-        currentPlayer.printBalance();
-        Console.blankLines(1);
-    }
-
-    //get & set
+    //getters & setters
     public String getRounds() {
         return rounds;
     }

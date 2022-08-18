@@ -4,19 +4,6 @@ import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.*;
 
-/*
- * Player
- * attributes:
- * String name (maybe leave out name input until end of game)
- * double cashBalance
- * double stockBalance
- * double totalBalance
- * behaviors:
- * buyStock()
- * sellStock()
- * printBalance()
- */
-
 public class Player implements Serializable {
 
     //attributes
@@ -109,8 +96,5 @@ public class Player implements Serializable {
         double result = 0.0;
         result = getStockAmountBalance() + getCashBalance();
         return result;
-    }
-
-    public void setName() {
     }
 }

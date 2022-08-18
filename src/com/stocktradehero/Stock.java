@@ -4,14 +4,6 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
-/*
- * Stock
- * attributes:
- * String companyName
- * String tickerSymbol
- * Enum   StockType
- * double price
- */
 public class Stock implements Serializable {
 
     // Fields, or attributes, of a stock

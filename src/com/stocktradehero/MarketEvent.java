@@ -1,18 +1,6 @@
 package com.stocktradehero;
 
-/*
- * MarketEvent has a "set of cards" that will be dealt on each turn. These are events that will influence the prices of stocks.
- * attributes (for example):
- * chipShortage         -- multiply TECH by 0.8
- * politicalDilemma     -- multiply all stock types by 0.9
- * pandemic             -- multiply all stock types by 0.7
- *
- * Chip shortage (negative for tech),
- * political situations, mergers and acquisitions, war, pandemic, interest rates, inflation,
- * food shortage (drought), climate emergency, oil shortage, bad company behavior, company earnings
- */
-
-enum MarketEvent { //consider MarketEvent
+enum MarketEvent {
 
     CHIP_SHORTAGE(.7,1.0,1.0,1.0, "There is a chip shortage. Tech stocks are down 30%"),
     METAVERSE_EXPANDING(1.3, 1.0, 1.0, 1.0, "Investments in the Metaverse have increased tenfold. Tech stocks up 30%."),
@@ -38,6 +26,7 @@ enum MarketEvent { //consider MarketEvent
     private double xAgriculture;
     private String cardText;
 
+    //ctor
     MarketEvent(double xTech, double xPreciousMetals, double xIndustrial, double xAgriculture, String cardText) {
         this.xTech = xTech;
         this.xPreciousMetals = xPreciousMetals;
@@ -46,6 +35,7 @@ enum MarketEvent { //consider MarketEvent
         this.cardText = cardText;
     }
 
+    //getters & setters
     public double getxTech() {
         return xTech;
     }

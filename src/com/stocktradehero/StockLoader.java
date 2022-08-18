@@ -15,10 +15,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class StockLoader {
-
+    //fields
     private final static String COMMA_DELIMITER = ",";
     private final Path dataFilepath;
-
+    //methods
     public StockLoader(String dataFilePath) {
         this.dataFilepath = Path.of(dataFilePath);
     }

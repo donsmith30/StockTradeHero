@@ -8,11 +8,12 @@ import java.util.*;
 
 class TopScores implements Serializable{
 
+    //fields
     private DecimalFormat df = new DecimalFormat("$" + "#.00");
     List<Player> topTenWinners = new ArrayList<>();
     private static final String dataFilePath = "data/top10.dat";
 
-    //ctor
+    //private ctor
     private TopScores() {
     }
 
@@ -36,7 +37,7 @@ class TopScores implements Serializable{
         // declare return value
         TopScores topScores = null;
         if (Files.exists(Path.of(dataFilePath))) {
-            // de-serialize the binary file board.dat back into the board object
+            // de-serialize the binary file top10.dat back into the TopScores object
             try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(dataFilePath))) {
                 topScores = (TopScores) in.readObject();
             } catch (Exception e) {
