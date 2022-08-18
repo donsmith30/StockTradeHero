@@ -1,16 +1,4 @@
 package com.stocktradehero;
-/*
- * Market
- * attributes:
- * String name
- * List<Player> players (HAS-A)
- * Stock                (HAS-A)
- * MarketForces         (HAS-A)
- * behaviors:
- * shuffle()   -- shuffle MarketForces
- * deal()      -- initial deal to set up game
- * giveStock() -- to Player
- */
 
 import com.apps.util.Console;
 import com.apps.util.Prompter;
@@ -256,7 +244,7 @@ public class GameMarketController {
                 "you did not enter a correct response, must choose one of the following: [B], [S] or [E]."));
     }
 
-    private void showGameBoard() { //todo: move these lines for board, replace with a board.show() method
+    private void showGameBoard() {
         Console.pause(2000);
         Console.clear();
         System.out.println("---C U R R E N T  P R I C E S---  \nMarket Event: " +currentMarketForce.getCardText());
