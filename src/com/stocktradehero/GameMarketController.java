@@ -76,14 +76,14 @@ public class GameMarketController {
         }
         finalStandings();
         for (Player player : players) {
+            topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
+            Collections.reverse(topScores.toptenwinners);
             if (topScores.toptenwinners.size() < 10) {
                 System.out.print(player.getName()+"\n");
                 namesPrompt();
                 player.setName(getWinnerNames());
                 topScores.toptenwinners.add(player);
             } else if (topScores.toptenwinners.get(9).getTotalAmountBalance() < player.getTotalAmountBalance()) {
-                topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
-                Collections.reverse(topScores.toptenwinners);
                 System.out.print(player.getName());
                 namesPrompt();
                 player.setName(getWinnerNames());
@@ -192,9 +192,6 @@ public class GameMarketController {
                             " Please try again!");
                 }
                 playerOption();
-            } else if (getPlayerOption().equals("C")) {
-                currentPlayer.printBalance();
-                playerOption();
             } else if (getPlayerOption().equals("R")) {
                 currentPlayer.setCashBalance(currentPlayer.getCashBalance()+1000);
                 System.out.println("The code [R] has been used + $1000");
@@ -239,8 +236,8 @@ public class GameMarketController {
     }
 
     private void roundsPrompt() {
-        setRounds(prompter.prompt("Enter the number of rounds to play [5] or [10]: ", "[1,5,10]{1,2}",
-                "Wrong input, please enter [5] or [10]!"));
+        setRounds(prompter.prompt("Enter the number of rounds to play [3], [6] or [10]: ", "[1,3,6,10]{1,2}",
+                "Wrong input, please enter [3], [6] or [10]!"));
     }
 
     private void stockPrompt() {
@@ -249,14 +246,14 @@ public class GameMarketController {
     }
 
     private void qtyPrompt() {
-        setQty(prompter.prompt("You have $" + df.format(currentPlayer.getCashBalance()) + ", Enter the amount of shares[0-99]: ", "[0-9]{1,2}",
+        setQty(prompter.prompt("You have " + df.format(currentPlayer.getCashBalance()) + ", Enter the amount of shares[0-99]: ", "[0-9]{1,2}",
                 "please enter a valid number[0-99]"));
     }
 
     private void playerOption() {
         showGameBoard();
-        setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks, [C]heck Balance or [E]nd turn:", "[BSRCE]{1}",
-                "you did not enter a correct response, must choose one of the following: [B], [S], [C] or [E]."));
+        setPlayerOption(prompter.prompt(currentPlayer.getName() + " Choose one of the following, [B]uy stocks, [S]ell stocks or [E]nd turn:", "[BSRE]{1}",
+                "you did not enter a correct response, must choose one of the following: [B], [S] or [E]."));
     }
 
     private void showGameBoard() { //todo: move these lines for board, replace with a board.show() method
