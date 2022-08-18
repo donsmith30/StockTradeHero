@@ -205,8 +205,8 @@ public class GameMarketController {
                     Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     Stock s2 = Objects.requireNonNull(currentPlayer.getPlayerStocks().stream().filter(stock -> entry.getKey().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                     System.out.println(s1.getTickerSymbol() + ", old stock price -> " + df.format(s1.getPrice()));
-                    s1.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
-                    s2.setPrice(Math.ceil(s1.getPrice() * (1 + (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
+                    s1.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
+                    s2.setPrice(Math.ceil(s1.getPrice() * (1 - (entry.getValue() * .005) * (1 - s1.getStockVolatility()))));
                     System.out.println(s1.getTickerSymbol() + ", new stock price -> " + df.format(s1.getPrice()));
                 }
                 buyTransactions.clear();
