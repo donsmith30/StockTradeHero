@@ -1,17 +1,13 @@
 package com.stocktradehero;
 
 /*
- * Cards will be a set of Market Forces
- * attributes:
+ * MarketEvent has a "set of cards" that will be dealt on each turn. These are events that will influence the prices of stocks.
+ * attributes (for example):
  * chipShortage         -- multiply TECH by 0.8
  * politicalDilemma     -- multiply all stock types by 0.9
  * pandemic             -- multiply all stock types by 0.7
- * positiveEarnings     -- multiply stock by 1.2
- * negativeEarnings     -- multiply stock by 0.8
- * badCompanyBehavior   -- multiply stock by 0.8
- * goodCompanyBehavior  -- multiply stock by 1.2
  *
- * Chip shortage (negative for tech and industrial),
+ * Chip shortage (negative for tech),
  * political situations, mergers and acquisitions, war, pandemic, interest rates, inflation,
  * food shortage (drought), climate emergency, oil shortage, bad company behavior, company earnings
  */
@@ -20,7 +16,7 @@ enum MarketEvent { //consider MarketEvent
 
     CHIP_SHORTAGE(.7,1.0,1.0,1.0, "There is a chip shortage. Tech stocks are down 30%"),
     METAVERSE_EXPANDING(1.3, 1.0, 1.0, 1.0, "Investments in the Metaverse have increased tenfold. Tech stocks up 30%."),
-    ENVIRONMENTAL_SANCTIONS(1.0, 0.7, 1.0, 1.0, "New worldwide sanctions on mining operations. Precious Metal stocks are down 30%"),
+    ENVIRONMENTAL_SANCTIONS(1.0, 0.7, 1.0, 1.0, "New worldwide sanctions on mining operations. Precious Metals are down 30%"),
     GOLD_STANDARD(1.0, 1.3, 1.0, 1.0, "The government has moved back to a Gold Standard for currency. Precious Metals are up 30%"),
     CONSTRUCTION_MATERIAL_SHORTAGE(1.0, 1.0, 0.7, 1.0, "Global shortages in lumber and other raw construction material. Industrial stocks are down 30%"),
     CONSTRUCTION_MATERIAL_SURPLUS(1.0, 1.0, 1.3, 1.0, "There is a global surplus of lumber and industrial supplies, and demand is high. Industrial stocks are up 30%"),
@@ -35,6 +31,7 @@ enum MarketEvent { //consider MarketEvent
     POSITIVE_EARNINGS(1.3, 1.3, 1.3, 1.3, "Economy is thriving. Revenues are up for all stocks. The market is up 30%"),
     NEGATIVE_EARNINGS(.6, .6, .6,.6, "Economy is dragging. Revenues are down for all stocks. The market is down 40%");
 
+    // multipliers for each stock type
     private double xTech;
     private double xPreciousMetals;
     private double xIndustrial;

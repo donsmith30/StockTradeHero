@@ -1,17 +1,10 @@
 package com.stocktradehero;
 
 /*
- * StatusBoard
- * attributes:
- * double playerNetWorth
- * double stockPrice
- * behavior...
- * ... EndGameBoard:
- * attributes:
- * List<Player> winners
- * behaviors:
- * getResult()
- * setName() --- if player score is top 10 all time
+ *
+ * StockLoader will load a csv into our application.
+ * We have a list of stocks that players will select from
+ *
  */
 
 import java.io.IOException;
@@ -23,10 +16,6 @@ import java.util.stream.Collectors;
 
 public class StockLoader {
 
-    private double playerNetWorth;
-//    private double stockPrice = getPrice();
-//    private final List<Player> winners = new ArrayList<>();
-//    public final List<Stock> stocksList = loadStocksList();
     private final static String COMMA_DELIMITER = ",";
     private final Path dataFilepath;
 
