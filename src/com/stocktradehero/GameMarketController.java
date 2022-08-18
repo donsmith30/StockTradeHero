@@ -76,13 +76,34 @@ public class GameMarketController {
             round();
         }
         finalStandings();
+        topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
+        Collections.reverse(topScores.toptenwinners);
         for (Player player : players) {
-            namesPrompt();
-            player.setName(getWinnerNames());
-            topScores.update(player);
+
+            if (topScores.toptenwinners.size() < 10) {
+                System.out.print(player.getName()+" ");
+                namesPrompt();
+                player.setName(getWinnerNames());
+                topScores.toptenwinners.add(player);
+                //topScores.update(player);
+            } else if (topScores.toptenwinners.get(9).getTotalAmountBalance() < player.getTotalAmountBalance()) {
+                System.out.print(player.getName());
+                namesPrompt();
+                player.setName(getWinnerNames());
+                //topScores.update(player);
+                System.out.println(player.getName()+" ");
+                topScores.toptenwinners.remove(9);
+                topScores.toptenwinners.add(player);
+            } else {
+
+            }
+        }
+        topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
+        Collections.reverse(topScores.toptenwinners);
+        topScores.save();
         topScores.show();
     }
-    }
+
 
     private void finalStandings() {
         players.sort((p1, p2) -> Double.compare(p1.getTotalAmountBalance(), p2.getTotalAmountBalance()));
@@ -213,8 +234,8 @@ public class GameMarketController {
         }
     }
     private void namesPrompt() {
-        setWinnerNames(prompter.prompt("Enter the 3 letters of initial of the winner: ", "[A-Z]{3}",
-                "please enter a valid name for the winner."));
+        setWinnerNames(prompter.prompt("High Score! Enter the 3 letters of initials for player's name: ", "[A-Z]{3}",
+                "please enter valid 3 letters for the winner."));
     }
 
     private void playersPrompt() {
@@ -248,7 +269,7 @@ public class GameMarketController {
         Console.clear();
         System.out.println("---C U R R E N T  P R I C E S---  \nMarket Event: " +currentMarketForce.getCardText());
         for (Stock item : stocks) {
-            System.out.println("Company: " + item.getCompanyName()+ ", stock volatility: " + item.getStockVolatility() + ", ROI: "+ item.getStockDividend() + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
+            System.out.println("Company: " + item.getCompanyName()+", Stock type: " + item.getStockType()+ ", stock volatility: " + item.getStockVolatility() + ", Dividends: "+ item.getStockDividend() + ", Stock Price: " + df.format(item.getPrice())+ ", Stock Ticker: " + item.getTickerSymbol());
         }
         Console.blankLines(1);
         System.out.println("---P l A Y E R  I N F O---");

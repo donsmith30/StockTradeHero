@@ -5,37 +5,21 @@ import com.apps.util.Prompter;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.text.DecimalFormat;
 import java.util.*;
 
 class TopScores implements Serializable{
-    //private Map<String, Double> topTenMap = new HashMap<>();
-    private List<Player> toptenwinners = new ArrayList<>();
 
-
+    private DecimalFormat df = new DecimalFormat("$" + "#.00");
+    List<Player> toptenwinners = new ArrayList<>();
     private static final String dataFilePath = "data/top10.dat";
 
     //ctor
     private TopScores() {
     }
 
-    public void update(Player winner) {
-        System.out.println(winner.getName());
-
-        if (toptenwinners.size() < 10) {
-            toptenwinners.add(winner);
-
-        } else if (toptenwinners.get(9).getTotalAmountBalance() < winner.getTotalAmountBalance()) {
-            System.out.println(winner.getName());
-            toptenwinners.remove(9);
-            toptenwinners.add(winner);
-        }
-        else {
-
-        }
-        save();
-    }
-
-    private void save() {
+    //methods
+    public void save() {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(dataFilePath))) {
             out.writeObject(this);
         } catch (Exception e) {
@@ -44,9 +28,9 @@ class TopScores implements Serializable{
     }
 
     public void show() {
-        System.out.println("T O P    W I N N E R S");
+        System.out.println("---T O P  1 0  W I N N E R S---");
         for (Player winner : toptenwinners) {
-            System.out.println(winner.getName()+ "'s total amount balance is:  " + winner.getTotalAmountBalance());
+            System.out.println(winner.getName()+ "'s total amount balance is:  " + df.format(winner.getTotalAmountBalance()));
         }
     }
 
@@ -65,6 +49,4 @@ class TopScores implements Serializable{
         }
         return topScores;
     }
-
-
 }
