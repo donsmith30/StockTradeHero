@@ -318,9 +318,4 @@ public class GameMarketController {
         this.winnerNames = winnerNames;
     }
 
-    //main test
-    public static void main(String[] args) {
-        GameMarketController game = new GameMarketController();
-        game.initialize();
-    }
 }
