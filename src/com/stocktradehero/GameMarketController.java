@@ -76,25 +76,25 @@ public class GameMarketController {
         }
         finalStandings();
         for (Player player : players) {
-            topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
-            Collections.reverse(topScores.toptenwinners);
-            if (topScores.toptenwinners.size() < 10) {
+            topScores.topTenWinners.sort((p1, p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
+            Collections.reverse(topScores.topTenWinners);
+            if (topScores.topTenWinners.size() < 10) {
                 System.out.print(player.getName()+"\n");
                 namesPrompt();
                 player.setName(getWinnerNames());
-                topScores.toptenwinners.add(player);
-            } else if (topScores.toptenwinners.get(9).getTotalAmountBalance() < player.getTotalAmountBalance()) {
+                topScores.topTenWinners.add(player);
+            } else if (topScores.topTenWinners.get(9).getTotalAmountBalance() < player.getTotalAmountBalance()) {
                 System.out.print(player.getName());
                 namesPrompt();
                 player.setName(getWinnerNames());
                 System.out.println(player.getName()+"\n");
-                topScores.toptenwinners.remove(9);
-                topScores.toptenwinners.add(player);
+                topScores.topTenWinners.remove(9);
+                topScores.topTenWinners.add(player);
             } else {
             }
         }
-        topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
-        Collections.reverse(topScores.toptenwinners);
+        topScores.topTenWinners.sort((p1, p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
+        Collections.reverse(topScores.topTenWinners);
         topScores.save();
         topScores.show();
     }

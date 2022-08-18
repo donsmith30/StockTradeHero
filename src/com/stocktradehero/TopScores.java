@@ -1,7 +1,5 @@
 package com.stocktradehero;
 
-import com.apps.util.Prompter;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,7 +9,7 @@ import java.util.*;
 class TopScores implements Serializable{
 
     private DecimalFormat df = new DecimalFormat("$" + "#.00");
-    List<Player> toptenwinners = new ArrayList<>();
+    List<Player> topTenWinners = new ArrayList<>();
     private static final String dataFilePath = "data/top10.dat";
 
     //ctor
@@ -29,7 +27,7 @@ class TopScores implements Serializable{
 
     public void show() {
         System.out.println("---T O P  1 0  W I N N E R S---");
-        for (Player winner : toptenwinners) {
+        for (Player winner : topTenWinners) {
             System.out.println(winner.getName()+ "'s total amount balance is:  " + df.format(winner.getTotalAmountBalance()));
         }
     }
