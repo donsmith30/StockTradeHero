@@ -8,7 +8,7 @@ class Main {
 
     public static void main(String[] args) {
         StockTradeHeroApp app = new StockTradeHeroApp();
-        app.welcome("images/officespace.jpeg");
+        app.welcome("images/stocktradehero.png" );
         app.start();
     }
 }
