@@ -305,5 +305,4 @@ public class GameMarketController {
     public void setWinnerNames(String winnerNames) {
         this.winnerNames = winnerNames;
     }
-
 }
