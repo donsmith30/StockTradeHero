@@ -30,7 +30,6 @@ public class GameMarketController {
             e.printStackTrace();
         }
     }
-
     private List<Player> players = new ArrayList<>();
     private List<MarketEvent> cards = new ArrayList<>(List.of(MarketEvent.values()));
     private Map<String, Integer> buyTransactions = new HashMap<>();
@@ -76,26 +75,22 @@ public class GameMarketController {
             round();
         }
         finalStandings();
-        topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
-        Collections.reverse(topScores.toptenwinners);
         for (Player player : players) {
-
             if (topScores.toptenwinners.size() < 10) {
-                System.out.print(player.getName()+" ");
+                System.out.print(player.getName()+"\n");
                 namesPrompt();
                 player.setName(getWinnerNames());
                 topScores.toptenwinners.add(player);
-                //topScores.update(player);
             } else if (topScores.toptenwinners.get(9).getTotalAmountBalance() < player.getTotalAmountBalance()) {
+                topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
+                Collections.reverse(topScores.toptenwinners);
                 System.out.print(player.getName());
                 namesPrompt();
                 player.setName(getWinnerNames());
-                //topScores.update(player);
-                System.out.println(player.getName()+" ");
+                System.out.println(player.getName()+"\n");
                 topScores.toptenwinners.remove(9);
                 topScores.toptenwinners.add(player);
             } else {
-
             }
         }
         topScores.toptenwinners.sort((p1,p2) -> Double.compare(p1.getTotalAmountBalance(),p2.getTotalAmountBalance()));
@@ -114,8 +109,7 @@ public class GameMarketController {
         }
     }
 
-    private void round() { //thinking the order of play will be here
-        //todo: add shuffle play card and do math on stock values
+    private void round() {
         marketForce();
         payDividends();
         System.out.println("Markets are opening soon...");
@@ -175,7 +169,7 @@ public class GameMarketController {
                 Stock s1 = Objects.requireNonNull(stocks.stream().filter(stock -> getStockName().equals(stock.getTickerSymbol())).findFirst().orElse(stocks.get(0)));
                 System.out.println(s1.getTickerSymbol()+"("+df.format(s1.getPrice())+"/per stock)");
                 qtyPrompt();
-                if (currentPlayer.getCashBalance() > s1.getPrice() * Integer.parseInt(getQty())) {
+                if (currentPlayer.getCashBalance() >= s1.getPrice() * Integer.parseInt(getQty())) {
                     currentPlayer.buyStock(Integer.parseInt(getQty()), s1);
                     buyTransactions.put(s1.getTickerSymbol(), Integer.parseInt(getQty()));
                     Console.pause(2000);
@@ -233,6 +227,7 @@ public class GameMarketController {
             }
         }
     }
+
     private void namesPrompt() {
         setWinnerNames(prompter.prompt("High Score! Enter the 3 letters of initials for player's name: ", "[A-Z]{3}",
                 "please enter valid 3 letters for the winner."));
@@ -254,7 +249,7 @@ public class GameMarketController {
     }
 
     private void qtyPrompt() {
-        setQty(prompter.prompt("You have $" + currentPlayer.getCashBalance() + ", Enter the amount of shares[0-99]: ", "[0-9]{1,2}",
+        setQty(prompter.prompt("You have $" + df.format(currentPlayer.getCashBalance()) + ", Enter the amount of shares[0-99]: ", "[0-9]{1,2}",
                 "please enter a valid number[0-99]"));
     }
 
@@ -276,8 +271,6 @@ public class GameMarketController {
         currentPlayer.printBalance();
         Console.blankLines(1);
     }
-
-
 
     //get & set
     public String getRounds() {

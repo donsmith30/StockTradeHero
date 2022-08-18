@@ -41,7 +41,6 @@ public class Player implements Serializable {
             cashBalance -= qty * stockName.getPrice();
             System.out.println(getName() + " just bought " + qty + " shares of " + stockName.getTickerSymbol());
         } else {
-
             int newShares= stockName.getShares()+qty;
             playerStocks.remove(stockName);
             stockName.setShares(newShares);
